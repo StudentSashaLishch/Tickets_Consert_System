@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tickets_Consert_System.UtilityClasses;
+using Tickets_Consert_System.MainClasses;
 
 namespace Tickets_Consert_System.Forms
 {
@@ -28,15 +29,20 @@ namespace Tickets_Consert_System.Forms
         public ClientForm(Client client) : this()
         {
             this.client = client;
-            WriteConsertsInfo();
+            WriteConsertsInfo(HandleContracts.conserts);
             WritePurchasedTickets();
             WriteInfoAboutMe();
         }
 
-        public void WriteConsertsInfo()
+        public void WriteConsertsInfo(List<Consert> list)
         {
             ConsertsList.Rows.Clear();
-            foreach (var consert in HandleContracts.conserts)
+            if (list == null)
+            {
+                return;
+            }
+
+            foreach (var consert in list)
             {
                 ConsertsList.Rows.Add(consert.ID, consert.DateOfConsert.ToString("HH dd.MM.yyyy"), consert.Singer.FullName, consert.TicketPrice);
             }
@@ -81,6 +87,9 @@ namespace Tickets_Consert_System.Forms
             BuyTick.FormClosed += (s, args) =>
             {
                 this.Show();
+                WritePurchasedTickets();
+                WriteInfoAboutMe();
+                WriteConsertsInfo(HandleContracts.conserts);
             };
             BuyTick.Show();
         }
@@ -88,6 +97,24 @@ namespace Tickets_Consert_System.Forms
         private void PurchasedTicks_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void materialRaisedButton2_Click(object sender, EventArgs e)
+        {
+            var settingsPage = new FilterSettings();
+
+            this.Hide();
+            settingsPage.FormClosed += (s, args) =>
+            {
+                this.Show();
+                WriteConsertsInfo(HandleContracts.filteredConserts);
+            };
+            settingsPage.Show();
+        }
+
+        private void ShowAll_Click(object sender, EventArgs e)
+        {
+            WriteConsertsInfo(HandleContracts.conserts);
         }
     }
 }

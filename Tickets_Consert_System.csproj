@@ -67,6 +67,12 @@
     <Compile Include="Forms\CreatingConsert.Designer.cs">
       <DependentUpon>CreatingConsert.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FilterSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FilterSettings.Designer.cs">
+      <DependentUpon>FilterSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\LogIn.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +97,7 @@
     <Compile Include="Forms\SingersForm.Designer.cs">
       <DependentUpon>SingersForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IFileWork.cs" />
     <Compile Include="MainClasses\Client.cs" />
     <Compile Include="MainClasses\Consert.cs" />
     <Compile Include="MainClasses\ContractProposal.cs" />
@@ -117,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreatingConsert.resx">
       <DependentUpon>CreatingConsert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FilterSettings.resx">
+      <DependentUpon>FilterSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

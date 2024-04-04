@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tickets_Consert_System.Interfaces;
 
 namespace Tickets_Consert_System
 {
-    public class Entity
+    public class Entity : IFileWork
     {
         public Guid ID { get; set; }
 

@@ -27,7 +27,7 @@ namespace Tickets_Consert_System
 
         }
 
-        public User(string login, string password, string fullName, string email) : this()
+        public User(string login = "none", string password = "none", string fullName = "none", string email = "none") : this()
         {
             Login = login;
             Password = password;

@@ -36,25 +36,27 @@
             this.DateOfConsert = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SingersName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TicketsPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.PurchasedTicks = new System.Windows.Forms.TabPage();
-            this.MyInfo = new System.Windows.Forms.TabPage();
             this.TicketsList = new System.Windows.Forms.DataGridView();
             this.PurchasedID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateOfConsertPurchased = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NameOfSingerPurchased = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NumberRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NumberPlace = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MyInfo = new System.Windows.Forms.TabPage();
+            this.MyBalance = new System.Windows.Forms.Label();
             this.MyEmail = new System.Windows.Forms.Label();
             this.MyName = new System.Windows.Forms.Label();
             this.MyLogin = new System.Windows.Forms.Label();
-            this.MyBalance = new System.Windows.Forms.Label();
+            this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
+            this.materialRaisedButton2 = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.ShowAll = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialTabControl1.SuspendLayout();
             this.Conserts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ConsertsList)).BeginInit();
             this.PurchasedTicks.SuspendLayout();
-            this.MyInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TicketsList)).BeginInit();
+            this.MyInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // materialTabControl1
@@ -72,6 +74,8 @@
             // 
             // Conserts
             // 
+            this.Conserts.Controls.Add(this.ShowAll);
+            this.Conserts.Controls.Add(this.materialRaisedButton2);
             this.Conserts.Controls.Add(this.materialRaisedButton1);
             this.Conserts.Controls.Add(this.ConsertsList);
             this.Conserts.Location = new System.Drawing.Point(4, 25);
@@ -146,17 +150,6 @@
             this.TicketsPrice.Name = "TicketsPrice";
             this.TicketsPrice.Width = 125;
             // 
-            // materialTabSelector1
-            // 
-            this.materialTabSelector1.BaseTabControl = this.materialTabControl1;
-            this.materialTabSelector1.Depth = 0;
-            this.materialTabSelector1.Location = new System.Drawing.Point(18, 95);
-            this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialTabSelector1.Name = "materialTabSelector1";
-            this.materialTabSelector1.Size = new System.Drawing.Size(766, 23);
-            this.materialTabSelector1.TabIndex = 1;
-            this.materialTabSelector1.Text = "materialTabSelector1";
-            // 
             // PurchasedTicks
             // 
             this.PurchasedTicks.Controls.Add(this.TicketsList);
@@ -168,19 +161,6 @@
             this.PurchasedTicks.Text = "Purchased tickets";
             this.PurchasedTicks.UseVisualStyleBackColor = true;
             this.PurchasedTicks.Click += new System.EventHandler(this.PurchasedTicks_Click);
-            // 
-            // MyInfo
-            // 
-            this.MyInfo.Controls.Add(this.MyBalance);
-            this.MyInfo.Controls.Add(this.MyEmail);
-            this.MyInfo.Controls.Add(this.MyName);
-            this.MyInfo.Controls.Add(this.MyLogin);
-            this.MyInfo.Location = new System.Drawing.Point(4, 25);
-            this.MyInfo.Name = "MyInfo";
-            this.MyInfo.Size = new System.Drawing.Size(771, 303);
-            this.MyInfo.TabIndex = 3;
-            this.MyInfo.Text = "Information about me";
-            this.MyInfo.UseVisualStyleBackColor = true;
             // 
             // TicketsList
             // 
@@ -238,6 +218,28 @@
             this.NumberPlace.Name = "NumberPlace";
             this.NumberPlace.Width = 125;
             // 
+            // MyInfo
+            // 
+            this.MyInfo.Controls.Add(this.MyBalance);
+            this.MyInfo.Controls.Add(this.MyEmail);
+            this.MyInfo.Controls.Add(this.MyName);
+            this.MyInfo.Controls.Add(this.MyLogin);
+            this.MyInfo.Location = new System.Drawing.Point(4, 25);
+            this.MyInfo.Name = "MyInfo";
+            this.MyInfo.Size = new System.Drawing.Size(771, 303);
+            this.MyInfo.TabIndex = 3;
+            this.MyInfo.Text = "Information about me";
+            this.MyInfo.UseVisualStyleBackColor = true;
+            // 
+            // MyBalance
+            // 
+            this.MyBalance.AutoSize = true;
+            this.MyBalance.Location = new System.Drawing.Point(12, 58);
+            this.MyBalance.Name = "MyBalance";
+            this.MyBalance.Size = new System.Drawing.Size(63, 16);
+            this.MyBalance.TabIndex = 13;
+            this.MyBalance.Text = "Balance: ";
+            // 
             // MyEmail
             // 
             this.MyEmail.AutoSize = true;
@@ -265,14 +267,48 @@
             this.MyLogin.TabIndex = 10;
             this.MyLogin.Text = "Login: ";
             // 
-            // MyBalance
+            // materialTabSelector1
             // 
-            this.MyBalance.AutoSize = true;
-            this.MyBalance.Location = new System.Drawing.Point(12, 58);
-            this.MyBalance.Name = "MyBalance";
-            this.MyBalance.Size = new System.Drawing.Size(63, 16);
-            this.MyBalance.TabIndex = 13;
-            this.MyBalance.Text = "Balance: ";
+            this.materialTabSelector1.BaseTabControl = this.materialTabControl1;
+            this.materialTabSelector1.Depth = 0;
+            this.materialTabSelector1.Location = new System.Drawing.Point(18, 95);
+            this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialTabSelector1.Name = "materialTabSelector1";
+            this.materialTabSelector1.Size = new System.Drawing.Size(766, 23);
+            this.materialTabSelector1.TabIndex = 1;
+            this.materialTabSelector1.Text = "materialTabSelector1";
+            // 
+            // materialRaisedButton2
+            // 
+            this.materialRaisedButton2.AutoSize = true;
+            this.materialRaisedButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialRaisedButton2.Depth = 0;
+            this.materialRaisedButton2.Icon = null;
+            this.materialRaisedButton2.Location = new System.Drawing.Point(526, 49);
+            this.materialRaisedButton2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRaisedButton2.Name = "materialRaisedButton2";
+            this.materialRaisedButton2.Primary = true;
+            this.materialRaisedButton2.Size = new System.Drawing.Size(76, 36);
+            this.materialRaisedButton2.TabIndex = 4;
+            this.materialRaisedButton2.Text = "Filter";
+            this.materialRaisedButton2.UseVisualStyleBackColor = true;
+            this.materialRaisedButton2.Click += new System.EventHandler(this.materialRaisedButton2_Click);
+            // 
+            // ShowAll
+            // 
+            this.ShowAll.AutoSize = true;
+            this.ShowAll.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ShowAll.Depth = 0;
+            this.ShowAll.Icon = null;
+            this.ShowAll.Location = new System.Drawing.Point(526, 92);
+            this.ShowAll.MouseState = MaterialSkin.MouseState.HOVER;
+            this.ShowAll.Name = "ShowAll";
+            this.ShowAll.Primary = true;
+            this.ShowAll.Size = new System.Drawing.Size(106, 36);
+            this.ShowAll.TabIndex = 5;
+            this.ShowAll.Text = "Show all";
+            this.ShowAll.UseVisualStyleBackColor = true;
+            this.ShowAll.Click += new System.EventHandler(this.ShowAll_Click);
             // 
             // ClientForm
             // 
@@ -289,9 +325,9 @@
             this.Conserts.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ConsertsList)).EndInit();
             this.PurchasedTicks.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TicketsList)).EndInit();
             this.MyInfo.ResumeLayout(false);
             this.MyInfo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TicketsList)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -319,5 +355,7 @@
         private System.Windows.Forms.Label MyName;
         private System.Windows.Forms.Label MyLogin;
         private System.Windows.Forms.Label MyBalance;
+        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton2;
+        private MaterialSkin.Controls.MaterialRaisedButton ShowAll;
     }
 }

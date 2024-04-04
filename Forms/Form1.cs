@@ -16,12 +16,22 @@ namespace Tickets_Consert_System
 {
     public partial class Form1 : MaterialForm
     {
+        /*public delegate void WriteInfo();
+        public static WriteInfo saveInfo;*/
+
         public Form1()
         {
             InitializeComponent();
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+
+            /*saveInfo += HandleContracts.WriteTicketSeelsIntoFile;
+            saveInfo += HandleContracts.WriteConsertsIntoFile;
+            saveInfo += HandleContracts.WriteTicketSeelsIntoFile;
+            saveInfo += HandleUsersInfo.WriteClientsInfoIntoFiles;
+            saveInfo += HandleUsersInfo.WriteSingersInfoIntoFiles;
+            saveInfo += HandleUsersInfo.WriteManagersInfoIntoFile;*/
         }
 
         private void SwitchForm(Form newForm)
@@ -48,5 +58,6 @@ namespace Tickets_Consert_System
         {
 
         }
+  
     }
 }

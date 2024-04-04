@@ -40,11 +40,11 @@ namespace Tickets_Consert_System.Forms
 
         private void BuyButton_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(NumberOfRow.Text, out int variableR) || !int.TryParse(NumberOfPlace.Text, out int variableP) || variableR > Consert.NumberRows || variableP > Consert.NumberPlacesInRow)
+            if (!int.TryParse(NumberOfRow.Text, out int variableR) || !int.TryParse(NumberOfPlace.Text, out int variableP) || variableR > Consert.NumberRows || variableP > Consert.NumberPlacesInRow || variableP <= 0 || variableR <= 0)
             {
                 MessageBox.Show("Invalid data!");
             }
-            else if (HandleContracts.IsSealedTicket(Consert.ID, variableP, variableP))
+            else if (HandleContracts.IsSealedTicket(Consert.ID, variableR, variableP))
             {
                 MessageBox.Show("This ticket has already sealed!");
             }

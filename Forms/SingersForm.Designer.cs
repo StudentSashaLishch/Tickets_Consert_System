@@ -43,12 +43,14 @@
             this.SingersName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TicketsPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MyInfo = new System.Windows.Forms.TabPage();
-            this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.MyManagersEmail = new System.Windows.Forms.Label();
             this.MyManagersName = new System.Windows.Forms.Label();
             this.MyEmail = new System.Windows.Forms.Label();
             this.MyName = new System.Windows.Forms.Label();
             this.MyLogin = new System.Windows.Forms.Label();
+            this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
+            this.ShowAll = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.materialRaisedButton3 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.SingersTabs.SuspendLayout();
             this.ContractProposals.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OfferedContracts)).BeginInit();
@@ -159,6 +161,8 @@
             // 
             // ConsertsInfo
             // 
+            this.ConsertsInfo.Controls.Add(this.ShowAll);
+            this.ConsertsInfo.Controls.Add(this.materialRaisedButton3);
             this.ConsertsInfo.Controls.Add(this.ConsertsList);
             this.ConsertsInfo.Location = new System.Drawing.Point(4, 25);
             this.ConsertsInfo.Name = "ConsertsInfo";
@@ -184,7 +188,7 @@
             this.ConsertsList.RowHeadersWidth = 51;
             this.ConsertsList.RowTemplate.Height = 24;
             this.ConsertsList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ConsertsList.Size = new System.Drawing.Size(917, 292);
+            this.ConsertsList.Size = new System.Drawing.Size(677, 292);
             this.ConsertsList.TabIndex = 2;
             // 
             // ConsertID
@@ -226,21 +230,10 @@
             this.MyInfo.Location = new System.Drawing.Point(4, 25);
             this.MyInfo.Name = "MyInfo";
             this.MyInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.MyInfo.Size = new System.Drawing.Size(929, 305);
+            this.MyInfo.Size = new System.Drawing.Size(776, 305);
             this.MyInfo.TabIndex = 1;
             this.MyInfo.Text = "Information About Me";
             this.MyInfo.UseVisualStyleBackColor = true;
-            // 
-            // materialTabSelector1
-            // 
-            this.materialTabSelector1.BaseTabControl = this.SingersTabs;
-            this.materialTabSelector1.Depth = 0;
-            this.materialTabSelector1.Location = new System.Drawing.Point(12, 94);
-            this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialTabSelector1.Name = "materialTabSelector1";
-            this.materialTabSelector1.Size = new System.Drawing.Size(932, 23);
-            this.materialTabSelector1.TabIndex = 1;
-            this.materialTabSelector1.Text = "materialTabSelector1";
             // 
             // MyManagersEmail
             // 
@@ -287,6 +280,49 @@
             this.MyLogin.TabIndex = 5;
             this.MyLogin.Text = "Login: ";
             // 
+            // materialTabSelector1
+            // 
+            this.materialTabSelector1.BaseTabControl = this.SingersTabs;
+            this.materialTabSelector1.Depth = 0;
+            this.materialTabSelector1.Location = new System.Drawing.Point(12, 94);
+            this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialTabSelector1.Name = "materialTabSelector1";
+            this.materialTabSelector1.Size = new System.Drawing.Size(932, 23);
+            this.materialTabSelector1.TabIndex = 1;
+            this.materialTabSelector1.Text = "materialTabSelector1";
+            // 
+            // ShowAll
+            // 
+            this.ShowAll.AutoSize = true;
+            this.ShowAll.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ShowAll.Depth = 0;
+            this.ShowAll.Icon = null;
+            this.ShowAll.Location = new System.Drawing.Point(689, 49);
+            this.ShowAll.MouseState = MaterialSkin.MouseState.HOVER;
+            this.ShowAll.Name = "ShowAll";
+            this.ShowAll.Primary = true;
+            this.ShowAll.Size = new System.Drawing.Size(106, 36);
+            this.ShowAll.TabIndex = 7;
+            this.ShowAll.Text = "Show all";
+            this.ShowAll.UseVisualStyleBackColor = true;
+            this.ShowAll.Click += new System.EventHandler(this.ShowAll_Click);
+            // 
+            // materialRaisedButton3
+            // 
+            this.materialRaisedButton3.AutoSize = true;
+            this.materialRaisedButton3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialRaisedButton3.Depth = 0;
+            this.materialRaisedButton3.Icon = null;
+            this.materialRaisedButton3.Location = new System.Drawing.Point(689, 6);
+            this.materialRaisedButton3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRaisedButton3.Name = "materialRaisedButton3";
+            this.materialRaisedButton3.Primary = true;
+            this.materialRaisedButton3.Size = new System.Drawing.Size(76, 36);
+            this.materialRaisedButton3.TabIndex = 6;
+            this.materialRaisedButton3.Text = "Filter";
+            this.materialRaisedButton3.UseVisualStyleBackColor = true;
+            this.materialRaisedButton3.Click += new System.EventHandler(this.materialRaisedButton3_Click);
+            // 
             // SingersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -302,6 +338,7 @@
             this.ContractProposals.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OfferedContracts)).EndInit();
             this.ConsertsInfo.ResumeLayout(false);
+            this.ConsertsInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ConsertsList)).EndInit();
             this.MyInfo.ResumeLayout(false);
             this.MyInfo.PerformLayout();
@@ -332,5 +369,7 @@
         private System.Windows.Forms.Label MyEmail;
         private System.Windows.Forms.Label MyName;
         private System.Windows.Forms.Label MyLogin;
+        private MaterialSkin.Controls.MaterialRaisedButton ShowAll;
+        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton3;
     }
 }

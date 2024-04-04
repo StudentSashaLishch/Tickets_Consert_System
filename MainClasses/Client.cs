@@ -16,7 +16,7 @@ namespace Tickets_Consert_System
             RoleUser = Role.Client;
         }
 
-        public Client(string login, string password, string fullname, string email) : this()
+        public Client(string login = "none", string password = "none", string fullname = "none", string email = "none") : this()
         {
             Login = login;
             Password = password;

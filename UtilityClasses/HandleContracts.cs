@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using Tickets_Consert_System.Interfaces;
 using Tickets_Consert_System.MainClasses;
 
 namespace Tickets_Consert_System.UtilityClasses
@@ -17,6 +19,9 @@ namespace Tickets_Consert_System.UtilityClasses
         public static List<ContractProposal> contractsProp { get; set; }
         public static List<Consert> conserts { get; set; }
         public static List<TicketSell> ticketSells { get; set; }
+        public static List<Consert> filteredConserts {  get; set; }
+
+        public delegate bool PredicateInfo(Consert consert);
 
         static HandleContracts()
         {
@@ -34,6 +39,7 @@ namespace Tickets_Consert_System.UtilityClasses
             }
 
             ReadInfoFromFiles();
+            filteredConserts = new List<Consert>();
         }
 
         public static void ReadInfoFromFiles()
@@ -184,6 +190,19 @@ namespace Tickets_Consert_System.UtilityClasses
                 }
             }
             return false;
+        }
+
+        public static void FilterByPredicate(PredicateInfo predicateInfo)
+        {
+            filteredConserts.Clear();
+            foreach(var consert in conserts)
+            {
+                if(predicateInfo(consert))
+                {
+                    filteredConserts.Add(consert);
+                }
+            }
+            MessageBox.Show("Success!");
         }
     }
 }

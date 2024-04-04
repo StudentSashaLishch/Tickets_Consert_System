@@ -19,7 +19,7 @@ namespace Tickets_Consert_System
             RoleUser = Role.Manager;
         }
 
-        public Manager(string login, string password, string fullname, string email) : base(login, password, fullname, email)
+        public Manager(string login = "none", string password = "none", string fullname = "none", string email = "none") : base(login, password, fullname, email)
         {
             RoleUser = Role.Manager;
         }

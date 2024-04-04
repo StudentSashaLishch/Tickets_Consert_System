@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using Tickets_Consert_System.MainClasses;
 using Tickets_Consert_System.UtilityClasses;
 
 namespace Tickets_Consert_System.Forms
@@ -29,7 +30,7 @@ namespace Tickets_Consert_System.Forms
             this.manager = manager;
             //MessageBox.Show($"{manager.RepresentativeSinger.ID}");
             WriteSingersList();
-            WriteConsertsList();
+            WriteConsertsList(HandleContracts.conserts);
             WriteInfoAbouMe();
         }
 
@@ -42,10 +43,10 @@ namespace Tickets_Consert_System.Forms
             }
         }
 
-        private void WriteConsertsList()
+        private void WriteConsertsList(List<Consert> list)
         {
             ConsertsList.Rows.Clear();
-            foreach(var consert in HandleContracts.conserts)
+            foreach(var consert in list)
             {
                 if(manager.RepresentativeSinger != null && consert.Singer.ID == manager.RepresentativeSinger.ID)
                 {
@@ -101,7 +102,7 @@ namespace Tickets_Consert_System.Forms
             creating.FormClosed += (s, args) =>
             {
                 this.Show();
-                WriteConsertsList();
+                WriteConsertsList(HandleContracts.conserts);
             };
             creating.Show();
         }
@@ -110,7 +111,25 @@ namespace Tickets_Consert_System.Forms
         {
             Guid consertID = Guid.Parse(ConsertsList.CurrentRow.Cells[0].Value.ToString());
             HandleContracts.DeleteConsert(consertID);
-            WriteConsertsList();
+            WriteConsertsList(HandleContracts.conserts);
+        }
+
+        private void ShowAll_Click(object sender, EventArgs e)
+        {
+            WriteConsertsList(HandleContracts.conserts);
+        }
+
+        private void materialRaisedButton3_Click(object sender, EventArgs e)
+        {
+            var settingsPage = new FilterSettings();
+
+            this.Hide();
+            settingsPage.FormClosed += (s, args) =>
+            {
+                this.Show();
+                WriteConsertsList(HandleContracts.filteredConserts);
+            };
+            settingsPage.Show();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Tickets_Consert_System.Forms
         {
             this.singer = singer;
             WriteContractProps();
-            WriteConsetrsList();
+            WriteConsetrsList(HandleContracts.conserts);
             WriteInfoAboutMe();
         }
 
@@ -46,10 +46,10 @@ namespace Tickets_Consert_System.Forms
             }
         }
 
-        public void WriteConsetrsList()
+        public void WriteConsetrsList(List<Consert> list)
         {
             ConsertsList.Rows.Clear();
-            foreach (var consert in HandleContracts.conserts)
+            foreach (var consert in list)
             {
                 if (consert.Singer.ID == singer.ID)
                 {
@@ -96,6 +96,24 @@ namespace Tickets_Consert_System.Forms
             HandleContracts.DeleteContractProposal(ContractID);
             WriteContractProps();
             //MessageBox.Show("Success!");
+        }
+
+        private void materialRaisedButton3_Click(object sender, EventArgs e)
+        {
+            var settingsPage = new FilterSettings();
+
+            this.Hide();
+            settingsPage.FormClosed += (s, args) =>
+            {
+                this.Show();
+                WriteConsetrsList(HandleContracts.filteredConserts);
+            };
+            settingsPage.Show();
+        }
+
+        private void ShowAll_Click(object sender, EventArgs e)
+        {
+            WriteConsetrsList(HandleContracts.conserts);
         }
     }
 }
