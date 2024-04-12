@@ -160,7 +160,6 @@
             this.PurchasedTicks.TabIndex = 2;
             this.PurchasedTicks.Text = "Purchased tickets";
             this.PurchasedTicks.UseVisualStyleBackColor = true;
-            this.PurchasedTicks.Click += new System.EventHandler(this.PurchasedTicks_Click);
             // 
             // TicketsList
             // 
@@ -319,7 +318,6 @@
             this.Controls.Add(this.materialTabControl1);
             this.Name = "ClientForm";
             this.Text = "ClientForm";
-            this.Load += new System.EventHandler(this.ClientForm_Load);
             this.materialTabControl1.ResumeLayout(false);
             this.Conserts.ResumeLayout(false);
             this.Conserts.PerformLayout();

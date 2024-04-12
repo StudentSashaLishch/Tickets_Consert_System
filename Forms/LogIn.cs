@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
@@ -24,12 +17,7 @@ namespace Tickets_Consert_System.Forms
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
         }
 
-        private void LogIn_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void materialRaisedButton2_Click(object sender, EventArgs e)
+        private void materialRaisedButton2_Click(object sender, EventArgs e) //Close button
         {
             var mainPage = new Form1();
             mainPage.Show();
@@ -46,7 +34,9 @@ namespace Tickets_Consert_System.Forms
 
             if (ManagerRole.Checked)
             {
-                var existedManager = HandleUsersInfo.managers.FirstOrDefault(manager => manager.Login == LoginField.Text);
+                var existedManager = Repository<Manager>
+                    .GetRepo(PathesOfFiles._ManagersFileName)
+                    .GetFirst(manager => manager.Login == LoginField.Text);
                 if (existedManager != null && existedManager.Password == PasswordField.Text)
                 {
                     MessageBox.Show("Success!");
@@ -67,7 +57,9 @@ namespace Tickets_Consert_System.Forms
             }
             else if (SingerRole.Checked)
             {
-                var existedSinger = HandleUsersInfo.singers.FirstOrDefault(Singer => Singer.Login == LoginField.Text);
+                var existedSinger = Repository<Singer>
+                    .GetRepo(PathesOfFiles._SingersFileName)
+                    .GetFirst(Singer => Singer.Login == LoginField.Text);
                 if (existedSinger != null && existedSinger.Password == PasswordField.Text)
                 {
                     MessageBox.Show("Success!");
@@ -87,7 +79,9 @@ namespace Tickets_Consert_System.Forms
             }
             else if (ClientRole.Checked)
             {
-                var existedClient = HandleUsersInfo.clients.FirstOrDefault(client => client.Login == LoginField.Text);
+                var existedClient = Repository<Client>
+                    .GetRepo(PathesOfFiles._ClientsFileName)
+                    .GetFirst(client => client.Login == LoginField.Text);
                 if (existedClient != null && existedClient.Password == PasswordField.Text)
                 {
                     MessageBox.Show("Success!");

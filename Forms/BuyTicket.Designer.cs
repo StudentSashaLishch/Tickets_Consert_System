@@ -117,7 +117,6 @@
             this.Controls.Add(this.label2);
             this.Name = "BuyTicket";
             this.Text = "BuyTicket";
-            this.Load += new System.EventHandler(this.BuyTicket_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

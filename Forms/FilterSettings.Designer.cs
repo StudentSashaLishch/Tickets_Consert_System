@@ -55,7 +55,6 @@
             this.MinPrice.TabIndex = 0;
             this.MinPrice.TabStop = false;
             this.MinPrice.UseSystemPasswordChar = false;
-            this.MinPrice.Click += new System.EventHandler(this.MinPrice_Click);
             // 
             // Text1
             // 
@@ -76,7 +75,6 @@
             this.label1.Size = new System.Drawing.Size(144, 25);
             this.label1.TabIndex = 3;
             this.label1.Text = "Maximum price";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // MaxPrice
             // 
@@ -94,7 +92,6 @@
             this.MaxPrice.TabIndex = 2;
             this.MaxPrice.TabStop = false;
             this.MaxPrice.UseSystemPasswordChar = false;
-            this.MaxPrice.Click += new System.EventHandler(this.materialSingleLineTextField1_Click);
             // 
             // label2
             // 
@@ -124,7 +121,6 @@
             this.minDateOfConsert.Name = "minDateOfConsert";
             this.minDateOfConsert.Size = new System.Drawing.Size(286, 28);
             this.minDateOfConsert.TabIndex = 6;
-            this.minDateOfConsert.ValueChanged += new System.EventHandler(this.minDateOfConsert_ValueChanged);
             // 
             // maxDateOfConsert
             // 
@@ -167,7 +163,6 @@
             this.Controls.Add(this.MinPrice);
             this.Name = "FilterSettings";
             this.Text = "FilterSettings";
-            this.Load += new System.EventHandler(this.FilterSettings_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

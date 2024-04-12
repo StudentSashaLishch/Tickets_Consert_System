@@ -119,7 +119,6 @@
             this.SingersList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.SingersList.Size = new System.Drawing.Size(696, 292);
             this.SingersList.TabIndex = 0;
-            this.SingersList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SingersList_CellContentClick);
             // 
             // SingerID
             // 
@@ -352,7 +351,6 @@
             this.Controls.Add(this.ManagersMenu);
             this.Name = "ManagersForm";
             this.Text = "Manager page";
-            this.Load += new System.EventHandler(this.ManagersForm_Load);
             this.ManagersMenu.ResumeLayout(false);
             this.Singers.ResumeLayout(false);
             this.Singers.PerformLayout();

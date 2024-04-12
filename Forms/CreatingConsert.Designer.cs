@@ -57,7 +57,6 @@
             this.dateOfConsert.Name = "dateOfConsert";
             this.dateOfConsert.Size = new System.Drawing.Size(301, 28);
             this.dateOfConsert.TabIndex = 2;
-            this.dateOfConsert.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // label2
             // 
@@ -174,7 +173,6 @@
             this.Controls.Add(this.label1);
             this.Name = "CreatingConsert";
             this.Text = "CreatingConsert";
-            this.Load += new System.EventHandler(this.CreatingConsert_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

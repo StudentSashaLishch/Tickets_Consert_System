@@ -1,12 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
@@ -17,6 +10,8 @@ namespace Tickets_Consert_System.Forms
 {
     public partial class FilterSettings : MaterialForm
     {
+        public List<Consert> filteredInfo { get; set; }
+
         public FilterSettings()
         {
             InitializeComponent();
@@ -30,21 +25,6 @@ namespace Tickets_Consert_System.Forms
             maxDateOfConsert.MinDate = DateTime.Now.AddDays(1);
         }
 
-        private void FilterSettings_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void materialSingleLineTextField1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Filter_Click(object sender, EventArgs e)
         {
             if (!(float.TryParse(MinPrice.Text, out float minPrice) && float.TryParse(MaxPrice.Text, out float maxPrice) && maxPrice >= minPrice && maxDateOfConsert.Value >= minDateOfConsert.Value))
@@ -52,7 +32,7 @@ namespace Tickets_Consert_System.Forms
                 MessageBox.Show("Invalid data");
                 return;
             }
-            HandleContracts.PredicateInfo newInfo = delegate (Consert consert)
+            Func<Consert, bool> newInfo = delegate (Consert consert)
             {
                 if (consert.DateOfConsert >= minDateOfConsert.Value && consert.DateOfConsert <= maxDateOfConsert.Value && consert.TicketPrice >= minPrice && consert.TicketPrice <= maxPrice)
                 {
@@ -64,17 +44,9 @@ namespace Tickets_Consert_System.Forms
                 }
             };
 
-            HandleContracts.FilterByPredicate(newInfo);
-        }
-
-        private void MinPrice_Click(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void minDateOfConsert_ValueChanged(object sender, EventArgs e)
-        {
-
+             filteredInfo = Repository<Consert>
+                            .GetRepo(PathesOfFiles._ConsertsInfoNameFile)
+                            .GetAll(newInfo);
         }
     }
 }

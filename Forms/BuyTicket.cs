@@ -1,13 +1,6 @@
 ﻿using System;
 using MaterialSkin;
 using MaterialSkin.Controls;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tickets_Consert_System.UtilityClasses;
 using Tickets_Consert_System.MainClasses;
@@ -33,18 +26,13 @@ namespace Tickets_Consert_System.Forms
 
         }
 
-        private void BuyTicket_Load(object sender, EventArgs e)
-        {
-            
-        }
-
         private void BuyButton_Click(object sender, EventArgs e)
         {
             if (!int.TryParse(NumberOfRow.Text, out int variableR) || !int.TryParse(NumberOfPlace.Text, out int variableP) || variableR > Consert.NumberRows || variableP > Consert.NumberPlacesInRow || variableP <= 0 || variableR <= 0)
             {
                 MessageBox.Show("Invalid data!");
             }
-            else if (HandleContracts.IsSealedTicket(Consert.ID, variableR, variableP))
+            else if (Repository<TicketSell>.GetRepo(PathesOfFiles._SealedTicketsNameFile).GetFirst(tick => Consert.ID == tick.ConsertID && variableR == tick.NumberRow && variableP == tick.NumberOfPlace) != null)
             {
                 MessageBox.Show("This ticket has already sealed!");
             }
@@ -54,10 +42,24 @@ namespace Tickets_Consert_System.Forms
             }
             else
             {
-                HandleContracts.NewTicketSell(Client.ID, Consert.ID, variableR, variableP);
+                TicketSell ticketSell = new TicketSell()
+                {
+                    ClientID = Client.ID,
+                    ConsertID = Consert.ID,
+                    NumberOfPlace = variableP,
+                    NumberRow = variableR
+                };
+
+                Repository<TicketSell>
+                    .GetRepo(PathesOfFiles._SealedTicketsNameFile)
+                    .Create(ticketSell);
+
                 Client.Ballanse -= Consert.TicketPrice;
-                HandleUsersInfo.WriteClientsInfoIntoFiles();
-                MessageBox.Show("Success");
+                Repository<Client>
+                    .GetRepo(PathesOfFiles._ClientsFileName)
+                    .Update(Client);
+
+                MessageBox.Show("Success!");
             }
         }
     }

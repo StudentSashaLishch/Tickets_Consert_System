@@ -266,7 +266,6 @@
             this.Controls.Add(this.label1);
             this.Name = "SignUpForm";
             this.Text = "Sign Up";
-            this.Load += new System.EventHandler(this.SignUpForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

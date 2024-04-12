@@ -1,12 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Tickets_Consert_System.MainClasses;
@@ -30,19 +23,19 @@ namespace Tickets_Consert_System.Forms
         {
             this.singer = singer;
             WriteContractProps();
-            WriteConsetrsList(HandleContracts.conserts);
+            WriteConsetrsList(Repository<Consert>.GetRepo(PathesOfFiles._ConsertsInfoNameFile).GetAll());
             WriteInfoAboutMe();
         }
 
         public void WriteContractProps()
         {
+            List<ContractProposal> contracts = Repository<ContractProposal>
+                .GetRepo(PathesOfFiles._OffersContractsNameFile)
+                .GetAll(contract => contract.SingerID == singer.ID);
             OfferedContracts.Rows.Clear();
-            foreach(var contract in HandleContracts.contractsProp)
+            foreach(var contract in contracts)
             {
-                if(contract.Singer.ID == singer.ID)
-                {
-                    OfferedContracts.Rows.Add(contract.ID, contract.OfferManager.FullName, contract.OfferManager.Email);
-                }
+               OfferedContracts.Rows.Add(contract.ID, contract.GetManager().FullName, contract.GetManager().Email);
             }
         }
 
@@ -51,9 +44,9 @@ namespace Tickets_Consert_System.Forms
             ConsertsList.Rows.Clear();
             foreach (var consert in list)
             {
-                if (consert.Singer.ID == singer.ID)
+                if (consert.SingerID == singer.ID)
                 {
-                    ConsertsList.Rows.Add(consert.ID, consert.DateOfConsert.ToString("HH dd.MM.yyyy"), consert.Singer.FullName, consert.TicketPrice);
+                    ConsertsList.Rows.Add(consert.ID, consert.DateOfConsert.ToString("HH dd.MM.yyyy"), consert.GetSinger().FullName, consert.TicketPrice);
                 }
             }
         }
@@ -64,7 +57,9 @@ namespace Tickets_Consert_System.Forms
             MyName.Text = "Full name: " + singer.FullName;
             MyEmail.Text = "Email: " + singer.Email;
 
-            var myManager = HandleUsersInfo.managers.FirstOrDefault(manager => manager.RepresentativeSinger != null && manager.RepresentativeSinger.ID == singer.ID);
+            var myManager = Repository<Manager>
+                .GetRepo(PathesOfFiles._ManagersFileName)
+                .GetFirst(manager => manager.GetSinger() != null && manager.RepresentativeSingerID == singer.ID);
             if(myManager != null)
             {
                 MyManagersName.Text = "The name of my manager: " + myManager.FullName;
@@ -72,30 +67,34 @@ namespace Tickets_Consert_System.Forms
             }
         }
 
-        private void SingersForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void materialRaisedButton1_Click(object sender, EventArgs e)
         {
             Guid ContractID = Guid.Parse(OfferedContracts.CurrentRow.Cells[0].Value.ToString());
-            ContractProposal contract = HandleContracts.contractsProp.FirstOrDefault(Contract => Contract.ID == ContractID);
+            ContractProposal contract = Repository<ContractProposal>
+                .GetRepo(PathesOfFiles._OffersContractsNameFile)
+                .GetFirst(Contract => Contract.ID == ContractID);
 
-            contract.OfferManager.RepresentativeSinger = singer;
-            HandleUsersInfo.WriteManagersInfoIntoFile();
+            var manager = contract.GetManager();
+            manager.RepresentativeSingerID = singer.ID;
+            Repository<Manager>
+                .GetRepo(PathesOfFiles._ManagersFileName)
+                .Update(manager);
 
-            HandleContracts.DeleteContractProposal(ContractID);
+            Repository<ContractProposal>
+                .GetRepo(PathesOfFiles._OffersContractsNameFile)
+                .Delete(ContractID);
+            
             WriteContractProps();
-            //MessageBox.Show("Success!");
+            WriteInfoAboutMe();
         }
 
         private void materialRaisedButton2_Click(object sender, EventArgs e)
         {
             Guid ContractID = Guid.Parse(OfferedContracts.CurrentRow.Cells[0].Value.ToString());
-            HandleContracts.DeleteContractProposal(ContractID);
+            Repository<ContractProposal>
+                .GetRepo(PathesOfFiles._OffersContractsNameFile)
+                .Delete(ContractID);
             WriteContractProps();
-            //MessageBox.Show("Success!");
         }
 
         private void materialRaisedButton3_Click(object sender, EventArgs e)
@@ -106,14 +105,14 @@ namespace Tickets_Consert_System.Forms
             settingsPage.FormClosed += (s, args) =>
             {
                 this.Show();
-                WriteConsetrsList(HandleContracts.filteredConserts);
+                WriteConsetrsList(settingsPage.filteredInfo);
             };
             settingsPage.Show();
         }
 
         private void ShowAll_Click(object sender, EventArgs e)
         {
-            WriteConsetrsList(HandleContracts.conserts);
+            WriteConsetrsList(Repository<Consert>.GetRepo(PathesOfFiles._ConsertsInfoNameFile).GetAll());
         }
     }
 }

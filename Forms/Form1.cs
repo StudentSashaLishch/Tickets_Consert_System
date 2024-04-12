@@ -1,23 +1,13 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tickets_Consert_System.Forms;
-using Tickets_Consert_System.UtilityClasses;
 
 namespace Tickets_Consert_System
 {
     public partial class Form1 : MaterialForm
     {
-        /*public delegate void WriteInfo();
-        public static WriteInfo saveInfo;*/
 
         public Form1()
         {
@@ -25,13 +15,6 @@ namespace Tickets_Consert_System
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-
-            /*saveInfo += HandleContracts.WriteTicketSeelsIntoFile;
-            saveInfo += HandleContracts.WriteConsertsIntoFile;
-            saveInfo += HandleContracts.WriteTicketSeelsIntoFile;
-            saveInfo += HandleUsersInfo.WriteClientsInfoIntoFiles;
-            saveInfo += HandleUsersInfo.WriteSingersInfoIntoFiles;
-            saveInfo += HandleUsersInfo.WriteManagersInfoIntoFile;*/
         }
 
         private void SwitchForm(Form newForm)
@@ -52,12 +35,6 @@ namespace Tickets_Consert_System
         private void LogIn_Click(object sender, EventArgs e)
         {
             SwitchForm(new LogIn());
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-  
+        }  
     }
 }

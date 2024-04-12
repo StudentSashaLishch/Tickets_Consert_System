@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
@@ -24,11 +17,6 @@ namespace Tickets_Consert_System.Forms
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
         }
 
-        private void SignUpForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void materialRaisedButton1_Click(object sender, EventArgs e) // RegisterButton
         {
             if (LoginField.Text == null || PasswordField.Text == null || FullNameField.Text == null || EmailField.Text == null || (!ManagerRole.Checked && !SingerRole.Checked && !ClientRole.Checked))
@@ -40,15 +28,18 @@ namespace Tickets_Consert_System.Forms
             if (ManagerRole.Checked)
             {
                 var newManager = new Manager(LoginField.Text, PasswordField.Text, FullNameField.Text, EmailField.Text);
-                var existedManager = HandleUsersInfo.managers.FirstOrDefault(manager => manager.Login == newManager.Login);
+                var existedManager = Repository<Manager>
+                    .GetRepo(PathesOfFiles._ManagersFileName)
+                    .GetFirst(manager => manager.Login == newManager.Login);
                 if (existedManager != null)
                 {
                     MessageBox.Show("Account with entered login has already exist");
                 }
                 else
                 {
-                    HandleUsersInfo.managers.Add(newManager);
-                    HandleUsersInfo.WriteManagersInfoIntoFile();
+                    Repository<Manager>
+                        .GetRepo(PathesOfFiles._ManagersFileName)
+                        .Create(newManager);
                     MessageBox.Show("Succsses!");
 
                     var workPage = new ManagersForm(newManager);
@@ -63,15 +54,18 @@ namespace Tickets_Consert_System.Forms
             else if (SingerRole.Checked)
             {
                 var newSinger = new Singer(LoginField.Text, PasswordField.Text, FullNameField.Text, EmailField.Text);
-                var existedSinger = HandleUsersInfo.singers.FirstOrDefault(singer => singer.Login == newSinger.Login);
+                var existedSinger = Repository<Singer>
+                    .GetRepo(PathesOfFiles._SingersFileName)
+                    .GetFirst(singer => singer.Login == newSinger.Login);
                 if (existedSinger != null)
                 {
                     MessageBox.Show("Account with entered login has already exist");
                 }
                 else
                 {
-                    HandleUsersInfo.singers.Add(newSinger);
-                    HandleUsersInfo.WriteSingersInfoIntoFiles();
+                    Repository<Singer>
+                        .GetRepo(PathesOfFiles._SingersFileName)
+                        .Create(newSinger);
                     MessageBox.Show("Succsses!");
 
                     var workPage = new SingersForm(newSinger);
@@ -86,15 +80,18 @@ namespace Tickets_Consert_System.Forms
             else if (ClientRole.Checked)
             {
                 var newClient = new Client(LoginField.Text, PasswordField.Text, FullNameField.Text, EmailField.Text);
-                var existedClient = HandleUsersInfo.clients.FirstOrDefault(Client => Client.Login == newClient.Login);
+                var existedClient = Repository<Client>
+                    .GetRepo(PathesOfFiles._ClientsFileName)
+                    .GetFirst(Client => Client.Login == newClient.Login);
                 if (existedClient != null)
                 {
                     MessageBox.Show("The account with the entered login already exists");
                 }
                 else
                 {
-                    HandleUsersInfo.clients.Add(newClient);
-                    HandleUsersInfo.WriteClientsInfoIntoFiles();
+                    Repository<Client>
+                        .GetRepo(PathesOfFiles._ClientsFileName)
+                        .Create(newClient);
                     MessageBox.Show("Succsses!");
 
                     var workPage = new ClientForm(newClient);

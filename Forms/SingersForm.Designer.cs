@@ -332,7 +332,6 @@
             this.Controls.Add(this.SingersTabs);
             this.Name = "SingersForm";
             this.Text = "SingersForm";
-            this.Load += new System.EventHandler(this.SingersForm_Load);
             this.SingersTabs.ResumeLayout(false);
             this.ContractProposals.ResumeLayout(false);
             this.ContractProposals.PerformLayout();
