@@ -1,43 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
 using System.Windows.Forms;
 using Tickets_Consert_System.Interfaces;
+using Tickets_Consert_System.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Tickets_Consert_System.UtilityClasses
 {
     public class Repository<T> : IRepository<T> where T : Entity
     {
-        private static string _filePath;
+        private static TicketsConsertSystemContext _context;
         private static Repository<T> _instanse;
-        private Repository(string path)
+        private static DbSet<T> _dbSet;
+        private Repository(TicketsConsertSystemContext db)
         {
-            _filePath = path;
+            _context = db;
+            _dbSet = _context.Set<T>();
         }
 
-        public static Repository<T> GetRepo(string path)
+        public static Repository<T> GetRepo(TicketsConsertSystemContext db)
         {
             if (_instanse == null)
-                _instanse = new Repository<T>(path);
+                _instanse = new Repository<T>(db);
 
             return _instanse;
         }
 
-        public List<T> GetAll(Func<T, bool> predicate = null)
+        public IEnumerable<T> GetAll(Func<T, bool> predicate = null)
         {
             try
             {
-                List<T> list = new List<T>();
-                string[] lines = File.ReadAllLines(_filePath);
-                foreach (string line in lines)
-                {
-                    T entity = JsonSerializer.Deserialize<T>(line);
-                    if (predicate == null || predicate(entity))
-                        list.Add(entity);
-                }
+                if (predicate == null)
+                    return _dbSet;
 
-                return list;
+                return _dbSet.AsEnumerable().Where(item => predicate(item));
             }
             catch (Exception ex)
             {
@@ -50,9 +47,8 @@ namespace Tickets_Consert_System.UtilityClasses
         {
             try
             {
-                List<T> entities = GetAll();
-                entities.Add(entity);
-                WriteInfo(entities);
+                _dbSet.Add(entity);
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -64,11 +60,11 @@ namespace Tickets_Consert_System.UtilityClasses
         {
             try
             {
-                List<T> entities = GetAll();
-                int index = entities.FindIndex(item => item.ID == id);
+                T entity = _dbSet.FirstOrDefault(item => item.ID == id);
 
-                entities.RemoveAt(index);
-                WriteInfo(entities);
+                
+                _dbSet.Remove(entity);
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -80,12 +76,11 @@ namespace Tickets_Consert_System.UtilityClasses
         {
             try
             {
-                var list = GetAll();
-                int index = list.FindIndex(e => e.ID == updatedEntity.ID);
-                if (index >= 0)
-                    list[index] = updatedEntity;
+                T entity = _dbSet.FirstOrDefault(item => updatedEntity.ID == item.ID);
+                _context.Entry(entity).CurrentValues.SetValues(updatedEntity);
+                _context.Entry(entity).State = EntityState.Modified;
 
-                WriteInfo(list);
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -93,31 +88,11 @@ namespace Tickets_Consert_System.UtilityClasses
             }
         }
 
-        public void WriteInfo(List<T> list)
-        {
-            try
-            {
-                File.WriteAllText(_filePath, "");
-                foreach (T entity in list)
-                {
-                    string line = JsonSerializer.Serialize(entity);
-                    File.AppendAllText(_filePath, line + Environment.NewLine);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Eror writing: {0}", ex.Message);
-            }
-        }
-
         public T GetFirst(Func<T, bool> predicate)
         {
             try
             {
-                List<T> list = GetAll(predicate);
-                if (list.Count > 0)
-                    return list[0];
-                return null;
+                return _dbSet.AsEnumerable().FirstOrDefault(item => predicate(item));
             }
             catch (Exception ex)
             {

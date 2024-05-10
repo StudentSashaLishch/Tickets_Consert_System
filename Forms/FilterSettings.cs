@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
-using Tickets_Consert_System.MainClasses;
 using Tickets_Consert_System.UtilityClasses;
+using Tickets_Consert_System.Data;
+using Tickets_Consert_System.MainClasses;
 
 namespace Tickets_Consert_System.Forms
 {
     public partial class FilterSettings : MaterialForm
     {
-        public List<Consert> filteredInfo { get; set; }
+        private TicketsConsertSystemContext context = new TicketsConsertSystemContext();
+        public IEnumerable<Consert> filteredInfo { get; set; }
 
         public FilterSettings()
         {
@@ -45,7 +47,7 @@ namespace Tickets_Consert_System.Forms
             };
 
              filteredInfo = Repository<Consert>
-                            .GetRepo(PathesOfFiles._ConsertsInfoNameFile)
+                            .GetRepo(context)
                             .GetAll(newInfo);
         }
     }

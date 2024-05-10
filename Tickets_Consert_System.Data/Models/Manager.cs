@@ -1,12 +1,17 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using Tickets_Consert_System.Data;
 using Tickets_Consert_System.MainClasses;
-using Tickets_Consert_System.UtilityClasses;
 
 namespace Tickets_Consert_System
 {
     public sealed class Manager : User
     {
-        public Guid RepresentativeSingerID { get; set; }
+        [ForeignKey("SingerID")]
+        public Guid SingerID { get; set; }
 
         public Manager() : base()
         {
@@ -20,9 +25,10 @@ namespace Tickets_Consert_System
 
         public Singer GetSinger()
         {
-            return Repository<Singer>
-                .GetRepo(PathesOfFiles._SingersFileName)
-                .GetFirst(singer => singer.ID == RepresentativeSingerID);
+            TicketsConsertSystemContext db = new TicketsConsertSystemContext();
+            Singer result = db.Singers.FirstOrDefault(s => s.ID == SingerID);
+
+            return result;
         }
     }
 }

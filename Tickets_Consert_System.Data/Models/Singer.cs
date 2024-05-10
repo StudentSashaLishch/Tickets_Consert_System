@@ -1,8 +1,10 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace Tickets_Consert_System.MainClasses
 {
     public class Singer : User
     {
+
         public Singer() : base()
         {
             RoleUser = Role.Singer;

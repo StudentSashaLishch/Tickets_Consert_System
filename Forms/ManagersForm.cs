@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
-using Tickets_Consert_System.MainClasses;
 using Tickets_Consert_System.UtilityClasses;
+using Tickets_Consert_System.Data;
+using Tickets_Consert_System.MainClasses;
 
 namespace Tickets_Consert_System.Forms
 {
     public partial class ManagersForm : MaterialForm
     {
+        private TicketsConsertSystemContext context = new TicketsConsertSystemContext();
+
         public Manager manager {  get; set; }
         public ManagersForm()
         {
@@ -23,25 +26,25 @@ namespace Tickets_Consert_System.Forms
         {
             this.manager = manager;
             WriteSingersList();
-            WriteConsertsList(Repository<Consert>.GetRepo(PathesOfFiles._ConsertsInfoNameFile).GetAll());
+            WriteConsertsList(Repository<Consert>.GetRepo(context).GetAll());
             WriteInfoAbouMe();
         }
 
         private void WriteSingersList()
         {
             SingersList.Rows.Clear();
-            foreach(var singer in Repository<Singer>.GetRepo(PathesOfFiles._SingersFileName).GetAll())
+            foreach(var singer in Repository<Singer>.GetRepo(context).GetAll())
             {
                 SingersList.Rows.Add(singer.ID, singer.FullName, singer.Email);
             }
         }
 
-        private void WriteConsertsList(List<Consert> list)
+        private void WriteConsertsList(IEnumerable<Consert> list)
         {
             ConsertsList.Rows.Clear();
             foreach(var consert in list)
             {
-                if(manager.GetSinger() != null && consert.SingerID == manager.RepresentativeSingerID)
+                if(manager.GetSinger() != null && consert.SingerID == manager.SingerID)
                 {
                     ConsertsList.Rows.Add(consert.ID, consert.DateOfConsert.ToString("HH dd.MM.yyyy"), consert.GetSinger().FullName, consert.TicketPrice);
                 }
@@ -72,11 +75,11 @@ namespace Tickets_Consert_System.Forms
 
             var Proposal = new ContractProposal()
             {
-                OfferManagerID = manager.ID,
+                ManagerID = manager.ID,
                 SingerID = Guid.Parse(SingersList.CurrentRow.Cells[0].Value.ToString())
             };
             Repository<ContractProposal>
-                .GetRepo(PathesOfFiles._OffersContractsNameFile)
+                .GetRepo(context)
                 .Create(Proposal);
 
             MessageBox.Show("Success!");
@@ -90,12 +93,12 @@ namespace Tickets_Consert_System.Forms
                 return;
             }
                 
-            var creating = new CreatingConsert(manager.RepresentativeSingerID);
+            var creating = new CreatingConsert(manager.SingerID);
             this.Hide();
             creating.FormClosed += (s, args) =>
             {
                 this.Show();
-                WriteConsertsList(Repository<Consert>.GetRepo(PathesOfFiles._ConsertsInfoNameFile).GetAll());
+                WriteConsertsList(Repository<Consert>.GetRepo(context).GetAll());
             };
             creating.Show();
         }
@@ -107,15 +110,15 @@ namespace Tickets_Consert_System.Forms
 
             Guid consertID = Guid.Parse(ConsertsList.CurrentRow.Cells[0].Value.ToString());
             Repository<Consert>
-                .GetRepo(PathesOfFiles._ConsertsInfoNameFile)
+                .GetRepo(context)
                 .Delete(consertID);
 
-            WriteConsertsList(Repository<Consert>.GetRepo(PathesOfFiles._ConsertsInfoNameFile).GetAll());
+            WriteConsertsList(Repository<Consert>.GetRepo(context).GetAll());
         }
 
         private void ShowAll_Click(object sender, EventArgs e)
         {
-            WriteConsertsList(Repository<Consert>.GetRepo(PathesOfFiles._ConsertsInfoNameFile).GetAll());
+            WriteConsertsList(Repository<Consert>.GetRepo(context).GetAll());
         }
 
         private void materialRaisedButton3_Click(object sender, EventArgs e)

@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using MaterialSkin;
 using MaterialSkin.Controls;
-using Tickets_Consert_System.MainClasses;
 using Tickets_Consert_System.UtilityClasses;
+using Tickets_Consert_System.Data;
+using Tickets_Consert_System.MainClasses;
 
 namespace Tickets_Consert_System.Forms
 {
     public partial class SingersForm : MaterialForm
     {
+        private TicketsConsertSystemContext context = new TicketsConsertSystemContext();
+
         private Singer singer { get; set; }
 
         public SingersForm()
@@ -23,14 +26,14 @@ namespace Tickets_Consert_System.Forms
         {
             this.singer = singer;
             WriteContractProps();
-            WriteConsetrsList(Repository<Consert>.GetRepo(PathesOfFiles._ConsertsInfoNameFile).GetAll());
+            WriteConsetrsList(Repository<Consert>.GetRepo(context).GetAll());
             WriteInfoAboutMe();
         }
 
         public void WriteContractProps()
         {
-            List<ContractProposal> contracts = Repository<ContractProposal>
-                .GetRepo(PathesOfFiles._OffersContractsNameFile)
+            IEnumerable<ContractProposal> contracts = Repository<ContractProposal>
+                .GetRepo(context)
                 .GetAll(contract => contract.SingerID == singer.ID);
             OfferedContracts.Rows.Clear();
             foreach(var contract in contracts)
@@ -39,7 +42,7 @@ namespace Tickets_Consert_System.Forms
             }
         }
 
-        public void WriteConsetrsList(List<Consert> list)
+        public void WriteConsetrsList(IEnumerable<Consert> list)
         {
             ConsertsList.Rows.Clear();
             foreach (var consert in list)
@@ -58,8 +61,8 @@ namespace Tickets_Consert_System.Forms
             MyEmail.Text = "Email: " + singer.Email;
 
             var myManager = Repository<Manager>
-                .GetRepo(PathesOfFiles._ManagersFileName)
-                .GetFirst(manager => manager.GetSinger() != null && manager.RepresentativeSingerID == singer.ID);
+                .GetRepo(context)
+                .GetFirst(manager => manager.GetSinger() != null && manager.SingerID == singer.ID);
             if(myManager != null)
             {
                 MyManagersName.Text = "The name of my manager: " + myManager.FullName;
@@ -71,17 +74,17 @@ namespace Tickets_Consert_System.Forms
         {
             Guid ContractID = Guid.Parse(OfferedContracts.CurrentRow.Cells[0].Value.ToString());
             ContractProposal contract = Repository<ContractProposal>
-                .GetRepo(PathesOfFiles._OffersContractsNameFile)
+                .GetRepo(context)
                 .GetFirst(Contract => Contract.ID == ContractID);
 
             var manager = contract.GetManager();
-            manager.RepresentativeSingerID = singer.ID;
+            manager.SingerID = singer.ID;
             Repository<Manager>
-                .GetRepo(PathesOfFiles._ManagersFileName)
+                .GetRepo(context)
                 .Update(manager);
 
             Repository<ContractProposal>
-                .GetRepo(PathesOfFiles._OffersContractsNameFile)
+                .GetRepo(context)
                 .Delete(ContractID);
             
             WriteContractProps();
@@ -92,7 +95,7 @@ namespace Tickets_Consert_System.Forms
         {
             Guid ContractID = Guid.Parse(OfferedContracts.CurrentRow.Cells[0].Value.ToString());
             Repository<ContractProposal>
-                .GetRepo(PathesOfFiles._OffersContractsNameFile)
+                .GetRepo(context)
                 .Delete(ContractID);
             WriteContractProps();
         }
@@ -112,7 +115,7 @@ namespace Tickets_Consert_System.Forms
 
         private void ShowAll_Click(object sender, EventArgs e)
         {
-            WriteConsetrsList(Repository<Consert>.GetRepo(PathesOfFiles._ConsertsInfoNameFile).GetAll());
+            WriteConsetrsList(Repository<Consert>.GetRepo(context).GetAll());
         }
     }
 }

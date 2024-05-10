@@ -1,11 +1,15 @@
 ﻿using System;
-using Tickets_Consert_System.UtilityClasses;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using Tickets_Consert_System.Data;
 
 namespace Tickets_Consert_System.MainClasses
 {
     public sealed class Consert : Entity
     {
         public DateTime DateOfConsert { get; set; }
+        [ForeignKey("SingerID")]
         public Guid SingerID { get; set; }
         public int NumberRows { get; set; }
         public int NumberPlacesInRow { get; set; }
@@ -18,9 +22,10 @@ namespace Tickets_Consert_System.MainClasses
 
         public Singer GetSinger()
         {
-            return Repository<Singer>
-                .GetRepo(PathesOfFiles._SingersFileName)
-                .GetFirst(singer => singer.ID == SingerID);
+            TicketsConsertSystemContext db = new TicketsConsertSystemContext();
+            Singer result = db.Singers.FirstOrDefault(s => s.ID == SingerID);
+
+            return result;
         }
     }
 }

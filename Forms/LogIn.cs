@@ -2,13 +2,16 @@
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using System.Linq;
 using Tickets_Consert_System.MainClasses;
 using Tickets_Consert_System.UtilityClasses;
+using Tickets_Consert_System.Data;
 
 namespace Tickets_Consert_System.Forms
 {
     public partial class LogIn : MaterialForm
     {
+        private TicketsConsertSystemContext context = new TicketsConsertSystemContext();
         public LogIn()
         {
             InitializeComponent();
@@ -35,8 +38,9 @@ namespace Tickets_Consert_System.Forms
             if (ManagerRole.Checked)
             {
                 var existedManager = Repository<Manager>
-                    .GetRepo(PathesOfFiles._ManagersFileName)
+                    .GetRepo(context)
                     .GetFirst(manager => manager.Login == LoginField.Text);
+                
                 if (existedManager != null && existedManager.Password == PasswordField.Text)
                 {
                     MessageBox.Show("Success!");
@@ -58,7 +62,7 @@ namespace Tickets_Consert_System.Forms
             else if (SingerRole.Checked)
             {
                 var existedSinger = Repository<Singer>
-                    .GetRepo(PathesOfFiles._SingersFileName)
+                    .GetRepo(context)
                     .GetFirst(Singer => Singer.Login == LoginField.Text);
                 if (existedSinger != null && existedSinger.Password == PasswordField.Text)
                 {
@@ -80,7 +84,7 @@ namespace Tickets_Consert_System.Forms
             else if (ClientRole.Checked)
             {
                 var existedClient = Repository<Client>
-                    .GetRepo(PathesOfFiles._ClientsFileName)
+                    .GetRepo(context)
                     .GetFirst(client => client.Login == LoginField.Text);
                 if (existedClient != null && existedClient.Password == PasswordField.Text)
                 {

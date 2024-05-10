@@ -4,13 +4,15 @@ using MaterialSkin.Controls;
 using System.Windows.Forms;
 using Tickets_Consert_System.UtilityClasses;
 using Tickets_Consert_System.MainClasses;
+using Tickets_Consert_System.Data;
 
 namespace Tickets_Consert_System.Forms
 {
     public partial class BuyTicket : MaterialForm
     {
+        private TicketsConsertSystemContext context = new TicketsConsertSystemContext();
         public Client Client {  get; set; }
-        public Consert Consert { get; set; }
+        public  Consert Consert{ get; set; }
         public BuyTicket()
         {
             InitializeComponent();
@@ -32,7 +34,7 @@ namespace Tickets_Consert_System.Forms
             {
                 MessageBox.Show("Invalid data!");
             }
-            else if (Repository<TicketSell>.GetRepo(PathesOfFiles._SealedTicketsNameFile).GetFirst(tick => Consert.ID == tick.ConsertID && variableR == tick.NumberRow && variableP == tick.NumberOfPlace) != null)
+            else if (Repository<TicketSell>.GetRepo(context).GetFirst(tick => Consert.ID == tick.ConsertID && variableR == tick.NumberRow && variableP == tick.NumberOfPlace) != null)
             {
                 MessageBox.Show("This ticket has already sealed!");
             }
@@ -51,12 +53,12 @@ namespace Tickets_Consert_System.Forms
                 };
 
                 Repository<TicketSell>
-                    .GetRepo(PathesOfFiles._SealedTicketsNameFile)
+                    .GetRepo(context)
                     .Create(ticketSell);
 
                 Client.Ballanse -= Consert.TicketPrice;
                 Repository<Client>
-                    .GetRepo(PathesOfFiles._ClientsFileName)
+                    .GetRepo(context)
                     .Update(Client);
 
                 MessageBox.Show("Success!");

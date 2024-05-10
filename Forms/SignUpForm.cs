@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
+using Tickets_Consert_System.Data;
 using Tickets_Consert_System.MainClasses;
 using Tickets_Consert_System.UtilityClasses;
 
@@ -9,6 +10,8 @@ namespace Tickets_Consert_System.Forms
 {
     public partial class SignUpForm : MaterialForm
     {
+        private TicketsConsertSystemContext context = new TicketsConsertSystemContext();
+
         public SignUpForm()
         {
             InitializeComponent();
@@ -29,7 +32,7 @@ namespace Tickets_Consert_System.Forms
             {
                 var newManager = new Manager(LoginField.Text, PasswordField.Text, FullNameField.Text, EmailField.Text);
                 var existedManager = Repository<Manager>
-                    .GetRepo(PathesOfFiles._ManagersFileName)
+                    .GetRepo(context)
                     .GetFirst(manager => manager.Login == newManager.Login);
                 if (existedManager != null)
                 {
@@ -38,7 +41,7 @@ namespace Tickets_Consert_System.Forms
                 else
                 {
                     Repository<Manager>
-                        .GetRepo(PathesOfFiles._ManagersFileName)
+                        .GetRepo(context)
                         .Create(newManager);
                     MessageBox.Show("Succsses!");
 
@@ -55,7 +58,7 @@ namespace Tickets_Consert_System.Forms
             {
                 var newSinger = new Singer(LoginField.Text, PasswordField.Text, FullNameField.Text, EmailField.Text);
                 var existedSinger = Repository<Singer>
-                    .GetRepo(PathesOfFiles._SingersFileName)
+                    .GetRepo(context)
                     .GetFirst(singer => singer.Login == newSinger.Login);
                 if (existedSinger != null)
                 {
@@ -64,7 +67,7 @@ namespace Tickets_Consert_System.Forms
                 else
                 {
                     Repository<Singer>
-                        .GetRepo(PathesOfFiles._SingersFileName)
+                        .GetRepo(context)
                         .Create(newSinger);
                     MessageBox.Show("Succsses!");
 
@@ -81,7 +84,7 @@ namespace Tickets_Consert_System.Forms
             {
                 var newClient = new Client(LoginField.Text, PasswordField.Text, FullNameField.Text, EmailField.Text);
                 var existedClient = Repository<Client>
-                    .GetRepo(PathesOfFiles._ClientsFileName)
+                    .GetRepo(context)
                     .GetFirst(Client => Client.Login == newClient.Login);
                 if (existedClient != null)
                 {
@@ -90,7 +93,7 @@ namespace Tickets_Consert_System.Forms
                 else
                 {
                     Repository<Client>
-                        .GetRepo(PathesOfFiles._ClientsFileName)
+                        .GetRepo(context)
                         .Create(newClient);
                     MessageBox.Show("Succsses!");
 

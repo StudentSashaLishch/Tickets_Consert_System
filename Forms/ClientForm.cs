@@ -4,12 +4,15 @@ using MaterialSkin.Controls;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Tickets_Consert_System.UtilityClasses;
+using Tickets_Consert_System.Data;
 using Tickets_Consert_System.MainClasses;
 
 namespace Tickets_Consert_System.Forms
 {
     public partial class ClientForm : MaterialForm
     {
+        private TicketsConsertSystemContext context = new TicketsConsertSystemContext();
+
         public Client client { get; set; }
 
         public ClientForm()
@@ -23,7 +26,7 @@ namespace Tickets_Consert_System.Forms
         public ClientForm(Client client) : this()
         {
             var conserts = Repository<Consert>
-                                .GetRepo(PathesOfFiles._ConsertsInfoNameFile)
+                                .GetRepo(context)
                                 .GetAll();
             this.client = client;
             WriteConsertsInfo(conserts);
@@ -31,7 +34,7 @@ namespace Tickets_Consert_System.Forms
             WriteInfoAboutMe();
         }
 
-        public void WriteConsertsInfo(List<Consert> list)
+        public void WriteConsertsInfo(IEnumerable<Consert> list)
         {
             ConsertsList.Rows.Clear();
             if (list == null)
@@ -48,13 +51,13 @@ namespace Tickets_Consert_System.Forms
         public void WritePurchasedTickets()
         {
             var ticketSells = Repository<TicketSell>
-                                    .GetRepo(PathesOfFiles._SealedTicketsNameFile)
+                                    .GetRepo(context)
                                     .GetAll(ticket => ticket.ClientID == client.ID);
             TicketsList.Rows.Clear();
             foreach(var ticket in ticketSells)
             {
                     var consert = Repository<Consert>
-                        .GetRepo(PathesOfFiles._ConsertsInfoNameFile)
+                        .GetRepo(context)
                         .GetFirst(Consert => Consert.ID == ticket.ConsertID);
                     TicketsList.Rows.Add(ticket.ID, consert.DateOfConsert.ToString("HH dd.MM.yyyy"), consert.GetSinger().FullName, ticket.NumberRow, ticket.NumberOfPlace);
             }
@@ -71,7 +74,7 @@ namespace Tickets_Consert_System.Forms
         private void materialRaisedButton1_Click(object sender, EventArgs e) // Buy ticket
         {
             var consert = Repository<Consert>
-                .GetRepo(PathesOfFiles._ConsertsInfoNameFile)
+                .GetRepo(context)
                 .GetFirst(Consert => Consert.ID == Guid.Parse(ConsertsList.CurrentRow.Cells[0].Value.ToString()));
             if(consert == null)
             {
@@ -85,7 +88,7 @@ namespace Tickets_Consert_System.Forms
                 this.Show();
                 WritePurchasedTickets();
                 WriteInfoAboutMe();
-                WriteConsertsInfo(Repository<Consert>.GetRepo(PathesOfFiles._ConsertsInfoNameFile).GetAll());
+                WriteConsertsInfo(Repository<Consert>.GetRepo(context).GetAll());
             };
             BuyTick.Show();
         }
@@ -105,7 +108,7 @@ namespace Tickets_Consert_System.Forms
 
         private void ShowAll_Click(object sender, EventArgs e)
         {
-            WriteConsertsInfo(Repository<Consert>.GetRepo(PathesOfFiles._ConsertsInfoNameFile).GetAll());
+            WriteConsertsInfo(Repository<Consert>.GetRepo(context).GetAll());
         }
     }
 }

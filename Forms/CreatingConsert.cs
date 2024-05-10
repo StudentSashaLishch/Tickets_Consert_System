@@ -4,11 +4,14 @@ using MaterialSkin.Controls;
 using System.Windows.Forms;
 using Tickets_Consert_System.UtilityClasses;
 using Tickets_Consert_System.MainClasses;
+using Tickets_Consert_System.Data;
 
 namespace Tickets_Consert_System.Forms
 {
     public partial class CreatingConsert : MaterialForm
     {
+        private TicketsConsertSystemContext context = new TicketsConsertSystemContext();
+
         public Guid singerID {  get; set; }
 
         public CreatingConsert()
@@ -40,7 +43,7 @@ namespace Tickets_Consert_System.Forms
                     TicketPrice = variablePr
                 };
                 Repository<Consert>
-                    .GetRepo(PathesOfFiles._ConsertsInfoNameFile)
+                    .GetRepo(context)
                     .Create(consert);
 
                 MessageBox.Show("Success!");

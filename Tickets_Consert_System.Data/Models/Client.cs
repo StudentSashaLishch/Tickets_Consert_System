@@ -1,4 +1,6 @@
-﻿
+﻿using System.Collections.Generic;
+using Tickets_Consert_System.MainClasses;
+
 namespace Tickets_Consert_System
 {
     public sealed class Client : User
