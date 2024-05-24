@@ -30,6 +30,8 @@
         {
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
             this.Conserts = new System.Windows.Forms.TabPage();
+            this.ShowAll = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.materialRaisedButton2 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialRaisedButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.ConsertsList = new System.Windows.Forms.DataGridView();
             this.ConsertID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,8 +51,7 @@
             this.MyName = new System.Windows.Forms.Label();
             this.MyLogin = new System.Windows.Forms.Label();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
-            this.materialRaisedButton2 = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.ShowAll = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.DeleteAccount = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialTabControl1.SuspendLayout();
             this.Conserts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ConsertsList)).BeginInit();
@@ -85,6 +86,38 @@
             this.Conserts.TabIndex = 1;
             this.Conserts.Text = "Conserts";
             this.Conserts.UseVisualStyleBackColor = true;
+            // 
+            // ShowAll
+            // 
+            this.ShowAll.AutoSize = true;
+            this.ShowAll.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ShowAll.Depth = 0;
+            this.ShowAll.Icon = null;
+            this.ShowAll.Location = new System.Drawing.Point(526, 92);
+            this.ShowAll.MouseState = MaterialSkin.MouseState.HOVER;
+            this.ShowAll.Name = "ShowAll";
+            this.ShowAll.Primary = true;
+            this.ShowAll.Size = new System.Drawing.Size(106, 36);
+            this.ShowAll.TabIndex = 5;
+            this.ShowAll.Text = "Show all";
+            this.ShowAll.UseVisualStyleBackColor = true;
+            this.ShowAll.Click += new System.EventHandler(this.ShowAll_Click);
+            // 
+            // materialRaisedButton2
+            // 
+            this.materialRaisedButton2.AutoSize = true;
+            this.materialRaisedButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialRaisedButton2.Depth = 0;
+            this.materialRaisedButton2.Icon = null;
+            this.materialRaisedButton2.Location = new System.Drawing.Point(526, 49);
+            this.materialRaisedButton2.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRaisedButton2.Name = "materialRaisedButton2";
+            this.materialRaisedButton2.Primary = true;
+            this.materialRaisedButton2.Size = new System.Drawing.Size(76, 36);
+            this.materialRaisedButton2.TabIndex = 4;
+            this.materialRaisedButton2.Text = "Filter";
+            this.materialRaisedButton2.UseVisualStyleBackColor = true;
+            this.materialRaisedButton2.Click += new System.EventHandler(this.materialRaisedButton2_Click);
             // 
             // materialRaisedButton1
             // 
@@ -219,6 +252,7 @@
             // 
             // MyInfo
             // 
+            this.MyInfo.Controls.Add(this.DeleteAccount);
             this.MyInfo.Controls.Add(this.MyBalance);
             this.MyInfo.Controls.Add(this.MyEmail);
             this.MyInfo.Controls.Add(this.MyName);
@@ -277,37 +311,21 @@
             this.materialTabSelector1.TabIndex = 1;
             this.materialTabSelector1.Text = "materialTabSelector1";
             // 
-            // materialRaisedButton2
+            // DeleteAccount
             // 
-            this.materialRaisedButton2.AutoSize = true;
-            this.materialRaisedButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialRaisedButton2.Depth = 0;
-            this.materialRaisedButton2.Icon = null;
-            this.materialRaisedButton2.Location = new System.Drawing.Point(526, 49);
-            this.materialRaisedButton2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRaisedButton2.Name = "materialRaisedButton2";
-            this.materialRaisedButton2.Primary = true;
-            this.materialRaisedButton2.Size = new System.Drawing.Size(76, 36);
-            this.materialRaisedButton2.TabIndex = 4;
-            this.materialRaisedButton2.Text = "Filter";
-            this.materialRaisedButton2.UseVisualStyleBackColor = true;
-            this.materialRaisedButton2.Click += new System.EventHandler(this.materialRaisedButton2_Click);
-            // 
-            // ShowAll
-            // 
-            this.ShowAll.AutoSize = true;
-            this.ShowAll.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ShowAll.Depth = 0;
-            this.ShowAll.Icon = null;
-            this.ShowAll.Location = new System.Drawing.Point(526, 92);
-            this.ShowAll.MouseState = MaterialSkin.MouseState.HOVER;
-            this.ShowAll.Name = "ShowAll";
-            this.ShowAll.Primary = true;
-            this.ShowAll.Size = new System.Drawing.Size(106, 36);
-            this.ShowAll.TabIndex = 5;
-            this.ShowAll.Text = "Show all";
-            this.ShowAll.UseVisualStyleBackColor = true;
-            this.ShowAll.Click += new System.EventHandler(this.ShowAll_Click);
+            this.DeleteAccount.AutoSize = true;
+            this.DeleteAccount.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.DeleteAccount.Depth = 0;
+            this.DeleteAccount.Icon = null;
+            this.DeleteAccount.Location = new System.Drawing.Point(15, 254);
+            this.DeleteAccount.MouseState = MaterialSkin.MouseState.HOVER;
+            this.DeleteAccount.Name = "DeleteAccount";
+            this.DeleteAccount.Primary = true;
+            this.DeleteAccount.Size = new System.Drawing.Size(166, 36);
+            this.DeleteAccount.TabIndex = 14;
+            this.DeleteAccount.Text = "Delete Account";
+            this.DeleteAccount.UseVisualStyleBackColor = true;
+            this.DeleteAccount.Click += new System.EventHandler(this.DeleteAccount_Click);
             // 
             // ClientForm
             // 
@@ -355,5 +373,6 @@
         private System.Windows.Forms.Label MyBalance;
         private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton2;
         private MaterialSkin.Controls.MaterialRaisedButton ShowAll;
+        private MaterialSkin.Controls.MaterialRaisedButton DeleteAccount;
     }
 }

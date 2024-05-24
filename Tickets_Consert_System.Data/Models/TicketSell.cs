@@ -26,13 +26,5 @@ namespace Tickets_Consert_System.MainClasses
 
             return result;
         }
-
-        public Consert GetConsert()
-        {
-            TicketsConsertSystemContext db = new TicketsConsertSystemContext();
-            Consert result = db.Conserts.FirstOrDefault(c => c.ID == ConsertID);
-
-            return result;
-        }
     }
 }

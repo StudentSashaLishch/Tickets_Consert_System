@@ -2,15 +2,15 @@
 using MaterialSkin;
 using MaterialSkin.Controls;
 using System.Windows.Forms;
-using Tickets_Consert_System.UtilityClasses;
 using Tickets_Consert_System.MainClasses;
 using Tickets_Consert_System.Data;
+using Tickets_Consert_System.UtilityClasses;
 
 namespace Tickets_Consert_System.Forms
 {
     public partial class CreatingConsert : MaterialForm
     {
-        private TicketsConsertSystemContext context = new TicketsConsertSystemContext();
+        //private TicketsConsertSystemContext context { get; set; }
 
         public Guid singerID {  get; set; }
 
@@ -23,6 +23,7 @@ namespace Tickets_Consert_System.Forms
 
             dateOfConsert.CustomFormat = "HH dd.MM.yyyy";
             dateOfConsert.MinDate = DateTime.Now.AddDays(1);
+            //context = new TicketsConsertSystemContext();
         }
 
         public CreatingConsert(Guid singerID) : this()
@@ -32,7 +33,7 @@ namespace Tickets_Consert_System.Forms
 
         private void materialRaisedButton1_Click(object sender, EventArgs e)
         {
-            if(int.TryParse(NumberOfRows.Text, out int variableR) && int.TryParse(NumberOfPlaces.Text, out int variablePl) && float.TryParse(PriceTicket.Text, out float variablePr) && variableR > 0 && variablePl > 0 && variablePr > 0)
+            if(int.TryParse(NumberOfRows.Text, out int variableR) && int.TryParse(NumberOfPlaces.Text, out int variablePl) && decimal.TryParse(PriceTicket.Text, out decimal variablePr) && variableR > 0 && variablePl > 0 && variablePr > 0)
             {
                 var consert = new Consert()
                 {
@@ -43,7 +44,7 @@ namespace Tickets_Consert_System.Forms
                     TicketPrice = variablePr
                 };
                 Repository<Consert>
-                    .GetRepo(context)
+                    .GetRepo(new TicketsConsertSystemContext())
                     .Create(consert);
 
                 MessageBox.Show("Success!");

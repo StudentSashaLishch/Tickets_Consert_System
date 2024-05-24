@@ -5,7 +5,7 @@ namespace Tickets_Consert_System
 {
     public sealed class Client : User
     {
-        public float Ballanse { get; set; }
+        public decimal Ballanse { get; set; }
 
         public Client() : base()
         {

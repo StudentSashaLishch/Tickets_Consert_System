@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using Tickets_Consert_System.Interfaces;
 using Tickets_Consert_System.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.IO;
 
 namespace Tickets_Consert_System.UtilityClasses
 {
-    public class Repository<T> : IRepository<T> where T : Entity
+    public class Repository<T> : IRepository<T> where T : Entity, new()
     {
+        private static string logFile = "logFile.txt";
+
         private static TicketsConsertSystemContext _context;
         private static Repository<T> _instanse;
         private static DbSet<T> _dbSet;
@@ -32,13 +34,14 @@ namespace Tickets_Consert_System.UtilityClasses
             try
             {
                 if (predicate == null)
-                    return _dbSet;
+                    return _dbSet.AsEnumerable();
 
+                _context.SaveChanges();
                 return _dbSet.AsEnumerable().Where(item => predicate(item));
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error reading: {0}", ex.Message);
+                WriteInLog(ex);
                 return null;
             }
         }
@@ -47,12 +50,12 @@ namespace Tickets_Consert_System.UtilityClasses
         {
             try
             {
-                _dbSet.Add(entity);
-                _context.SaveChanges();
+                _dbSet.AddAsync(entity);
+                _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error creating: {0}", ex.Message);
+                WriteInLog(ex);
             }
         }
 
@@ -60,15 +63,45 @@ namespace Tickets_Consert_System.UtilityClasses
         {
             try
             {
-                T entity = _dbSet.FirstOrDefault(item => item.ID == id);
-
+                var entity = new T { ID = id };
                 
                 _dbSet.Remove(entity);
-                _context.SaveChanges();
+                _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error deleting: {0}", ex.Message);
+                WriteInLog(ex);
+            }
+        }
+
+        public void DeleteRange(List<Guid> values)
+        {
+            try
+            {
+                List<T> list = new List<T>();
+                foreach (var id in values)
+                {
+                    list.Add(new T { ID = id });
+                }
+                _dbSet.RemoveRange(list);
+                _context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                WriteInLog(ex);
+            }
+        }
+
+        public void DeleteRange(List<T> values)
+        {
+            try
+            {
+                _dbSet.RemoveRange(values);
+                _context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                WriteInLog(ex);
             }
         }
 
@@ -76,7 +109,7 @@ namespace Tickets_Consert_System.UtilityClasses
         {
             try
             {
-                T entity = _dbSet.FirstOrDefault(item => updatedEntity.ID == item.ID);
+                T entity = _dbSet.FirstOrDefault(e => e.ID == updatedEntity.ID);
                 _context.Entry(entity).CurrentValues.SetValues(updatedEntity);
                 _context.Entry(entity).State = EntityState.Modified;
 
@@ -84,7 +117,7 @@ namespace Tickets_Consert_System.UtilityClasses
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error updating: {0}", ex.Message);
+                WriteInLog(ex);
             }
         }
 
@@ -92,13 +125,19 @@ namespace Tickets_Consert_System.UtilityClasses
         {
             try
             {
+                //_context.Dispose();
                 return _dbSet.AsEnumerable().FirstOrDefault(item => predicate(item));
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error looking: {0}", ex.Message);
+                WriteInLog(ex);
                 return null;
             }
+        }
+
+        private void WriteInLog(Exception ex)
+        {
+            File.WriteAllText(logFile, $"{DateTime.Now} Error: {ex.Message}\n");
         }
     }
 }

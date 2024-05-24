@@ -90,6 +90,12 @@
     <Compile Include="Forms\ClientForm.Designer.cs">
       <DependentUpon>ClientForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ConsertStatystic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConsertStatystic.Designer.cs">
+      <DependentUpon>ConsertStatystic.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CreatingConsert.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,16 +138,17 @@
     <Compile Include="Forms\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UtilityClasses\PathesOfFiles.cs" />
-    <Compile Include="UtilityClasses\Repository.cs" />
+    <Compile Include="UtilityClasses\UIManager.cs" />
     <EmbeddedResource Include="Forms\BuyTicket.resx">
       <DependentUpon>BuyTicket.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ClientForm.resx">
       <DependentUpon>ClientForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConsertStatystic.resx">
+      <DependentUpon>ConsertStatystic.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreatingConsert.resx">
       <DependentUpon>CreatingConsert.cs</DependentUpon>
@@ -196,6 +203,10 @@
       <Project>{85ea44f8-f11e-4415-a5d3-3eb3d7fca88a}</Project>
       <Name>Tickets_Consert_System.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pictures\Scene image.png" />
+    <None Include="Resources\Scene image.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

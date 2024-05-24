@@ -8,7 +8,7 @@ using Tickets_Consert_System.MainClasses;
 
 namespace Tickets_Consert_System
 {
-    public sealed class Manager : User
+    public class Manager : User
     {
         [ForeignKey("SingerID")]
         public Guid SingerID { get; set; }
@@ -21,14 +21,6 @@ namespace Tickets_Consert_System
         public Manager(string login = "none", string password = "none", string fullname = "none", string email = "none") : base(login, password, fullname, email)
         {
             RoleUser = Role.Manager;
-        }
-
-        public Singer GetSinger()
-        {
-            TicketsConsertSystemContext db = new TicketsConsertSystemContext();
-            Singer result = db.Singers.FirstOrDefault(s => s.ID == SingerID);
-
-            return result;
         }
     }
 }

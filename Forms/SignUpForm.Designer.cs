@@ -42,6 +42,9 @@
             this.ManagerRole = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialRaisedButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialRaisedButton2 = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.label6 = new System.Windows.Forms.Label();
+            this.RepeatPasswordField = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.materialCheckBox1 = new MaterialSkin.Controls.MaterialCheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -85,7 +88,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(11, 205);
+            this.label3.Location = new System.Drawing.Point(11, 322);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(135, 29);
             this.label3.TabIndex = 5;
@@ -95,11 +98,11 @@
             // 
             this.PasswordField.Depth = 0;
             this.PasswordField.Hint = "";
-            this.PasswordField.Location = new System.Drawing.Point(152, 205);
+            this.PasswordField.Location = new System.Drawing.Point(152, 322);
             this.PasswordField.MaxLength = 32767;
             this.PasswordField.MouseState = MaterialSkin.MouseState.HOVER;
             this.PasswordField.Name = "PasswordField";
-            this.PasswordField.PasswordChar = '\0';
+            this.PasswordField.PasswordChar = '*';
             this.PasswordField.SelectedText = "";
             this.PasswordField.SelectionLength = 0;
             this.PasswordField.SelectionStart = 0;
@@ -112,7 +115,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(11, 257);
+            this.label4.Location = new System.Drawing.Point(11, 209);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(135, 29);
             this.label4.TabIndex = 7;
@@ -122,7 +125,7 @@
             // 
             this.FullNameField.Depth = 0;
             this.FullNameField.Hint = "";
-            this.FullNameField.Location = new System.Drawing.Point(164, 258);
+            this.FullNameField.Location = new System.Drawing.Point(164, 210);
             this.FullNameField.MaxLength = 32767;
             this.FullNameField.MouseState = MaterialSkin.MouseState.HOVER;
             this.FullNameField.Name = "FullNameField";
@@ -139,7 +142,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(11, 312);
+            this.label5.Location = new System.Drawing.Point(11, 264);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(86, 29);
             this.label5.TabIndex = 9;
@@ -149,7 +152,7 @@
             // 
             this.EmailField.Depth = 0;
             this.EmailField.Hint = "";
-            this.EmailField.Location = new System.Drawing.Point(103, 313);
+            this.EmailField.Location = new System.Drawing.Point(103, 265);
             this.EmailField.MaxLength = 32767;
             this.EmailField.MouseState = MaterialSkin.MouseState.HOVER;
             this.EmailField.Name = "EmailField";
@@ -219,7 +222,7 @@
             this.materialRaisedButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialRaisedButton1.Depth = 0;
             this.materialRaisedButton1.Icon = null;
-            this.materialRaisedButton1.Location = new System.Drawing.Point(12, 402);
+            this.materialRaisedButton1.Location = new System.Drawing.Point(12, 435);
             this.materialRaisedButton1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRaisedButton1.Name = "materialRaisedButton1";
             this.materialRaisedButton1.Primary = true;
@@ -235,7 +238,7 @@
             this.materialRaisedButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialRaisedButton2.Depth = 0;
             this.materialRaisedButton2.Icon = null;
-            this.materialRaisedButton2.Location = new System.Drawing.Point(702, 402);
+            this.materialRaisedButton2.Location = new System.Drawing.Point(702, 435);
             this.materialRaisedButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRaisedButton2.Name = "materialRaisedButton2";
             this.materialRaisedButton2.Primary = true;
@@ -245,11 +248,60 @@
             this.materialRaisedButton2.UseVisualStyleBackColor = true;
             this.materialRaisedButton2.Click += new System.EventHandler(this.materialRaisedButton2_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Location = new System.Drawing.Point(11, 361);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(226, 29);
+            this.label6.TabIndex = 16;
+            this.label6.Text = "Repeat Password:";
+            // 
+            // RepeatPasswordField
+            // 
+            this.RepeatPasswordField.Depth = 0;
+            this.RepeatPasswordField.Hint = "";
+            this.RepeatPasswordField.Location = new System.Drawing.Point(243, 361);
+            this.RepeatPasswordField.MaxLength = 32767;
+            this.RepeatPasswordField.MouseState = MaterialSkin.MouseState.HOVER;
+            this.RepeatPasswordField.Name = "RepeatPasswordField";
+            this.RepeatPasswordField.PasswordChar = '*';
+            this.RepeatPasswordField.SelectedText = "";
+            this.RepeatPasswordField.SelectionLength = 0;
+            this.RepeatPasswordField.SelectionStart = 0;
+            this.RepeatPasswordField.Size = new System.Drawing.Size(237, 28);
+            this.RepeatPasswordField.TabIndex = 15;
+            this.RepeatPasswordField.TabStop = false;
+            this.RepeatPasswordField.UseSystemPasswordChar = false;
+            // 
+            // materialCheckBox1
+            // 
+            this.materialCheckBox1.AutoSize = true;
+            this.materialCheckBox1.Checked = true;
+            this.materialCheckBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.materialCheckBox1.Depth = 0;
+            this.materialCheckBox1.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialCheckBox1.Location = new System.Drawing.Point(570, 360);
+            this.materialCheckBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.materialCheckBox1.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialCheckBox1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCheckBox1.Name = "materialCheckBox1";
+            this.materialCheckBox1.Ripple = true;
+            this.materialCheckBox1.Size = new System.Drawing.Size(148, 30);
+            this.materialCheckBox1.TabIndex = 17;
+            this.materialCheckBox1.Text = "View password";
+            this.materialCheckBox1.UseVisualStyleBackColor = true;
+            this.materialCheckBox1.CheckedChanged += new System.EventHandler(this.materialCheckBox1_CheckedChanged);
+            // 
             // SignUpForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 483);
+            this.Controls.Add(this.materialCheckBox1);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.RepeatPasswordField);
             this.Controls.Add(this.materialRaisedButton2);
             this.Controls.Add(this.materialRaisedButton1);
             this.Controls.Add(this.ManagerRole);
@@ -287,5 +339,8 @@
         private MaterialSkin.Controls.MaterialRadioButton ManagerRole;
         private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton1;
         private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton2;
+        private System.Windows.Forms.Label label6;
+        private MaterialSkin.Controls.MaterialSingleLineTextField RepeatPasswordField;
+        private MaterialSkin.Controls.MaterialCheckBox materialCheckBox1;
     }
 }

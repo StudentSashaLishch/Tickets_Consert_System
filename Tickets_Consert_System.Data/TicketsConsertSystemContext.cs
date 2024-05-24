@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using System;
+using Tickets_Consert_System.Data.Models;
 using Tickets_Consert_System.MainClasses;
 
 namespace Tickets_Consert_System.Data
@@ -13,6 +14,7 @@ namespace Tickets_Consert_System.Data
         public DbSet<TicketSell> Tickets { get; set; }
         public DbSet<ContractProposal> ContractProposals { get; set; }
         public DbSet<Consert> Conserts { get; set; }
+        public DbSet<StatusMessage> Messages { get; set; }
 
         public TicketsConsertSystemContext()
         {
@@ -23,6 +25,8 @@ namespace Tickets_Consert_System.Data
         {
             optionsBuilder.UseMySql("server=localhost;user=root;password=12345;database=consert_system",
                 version => version.ServerVersion(new Version(8, 0, 3), ServerType.MySql));
+
+            
         }
     }
 }

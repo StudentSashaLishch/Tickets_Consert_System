@@ -39,6 +39,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.materialRaisedButton2 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialRaisedButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.materialCheckBox1 = new MaterialSkin.Controls.MaterialCheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -69,7 +70,7 @@
             this.PasswordField.MaxLength = 32767;
             this.PasswordField.MouseState = MaterialSkin.MouseState.HOVER;
             this.PasswordField.Name = "PasswordField";
-            this.PasswordField.PasswordChar = '\0';
+            this.PasswordField.PasswordChar = '*';
             this.PasswordField.SelectedText = "";
             this.PasswordField.SelectionLength = 0;
             this.PasswordField.SelectionStart = 0;
@@ -100,7 +101,7 @@
             this.LoginField.SelectedText = "";
             this.LoginField.SelectionLength = 0;
             this.LoginField.SelectionStart = 0;
-            this.LoginField.Size = new System.Drawing.Size(377, 28);
+            this.LoginField.Size = new System.Drawing.Size(539, 28);
             this.LoginField.TabIndex = 6;
             this.LoginField.TabStop = false;
             this.LoginField.UseSystemPasswordChar = false;
@@ -198,11 +199,31 @@
             this.materialRaisedButton1.UseVisualStyleBackColor = true;
             this.materialRaisedButton1.Click += new System.EventHandler(this.materialRaisedButton1_Click);
             // 
+            // materialCheckBox1
+            // 
+            this.materialCheckBox1.AutoSize = true;
+            this.materialCheckBox1.Checked = true;
+            this.materialCheckBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.materialCheckBox1.Depth = 0;
+            this.materialCheckBox1.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialCheckBox1.Location = new System.Drawing.Point(497, 200);
+            this.materialCheckBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.materialCheckBox1.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialCheckBox1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialCheckBox1.Name = "materialCheckBox1";
+            this.materialCheckBox1.Ripple = true;
+            this.materialCheckBox1.Size = new System.Drawing.Size(148, 30);
+            this.materialCheckBox1.TabIndex = 19;
+            this.materialCheckBox1.Text = "View password";
+            this.materialCheckBox1.UseVisualStyleBackColor = true;
+            this.materialCheckBox1.CheckedChanged += new System.EventHandler(this.materialCheckBox1_CheckedChanged);
+            // 
             // LogIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.materialCheckBox1);
             this.Controls.Add(this.materialRaisedButton2);
             this.Controls.Add(this.materialRaisedButton1);
             this.Controls.Add(this.label4);
@@ -234,5 +255,6 @@
         private System.Windows.Forms.Label label4;
         private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton2;
         private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton1;
+        private MaterialSkin.Controls.MaterialCheckBox materialCheckBox1;
     }
 }
