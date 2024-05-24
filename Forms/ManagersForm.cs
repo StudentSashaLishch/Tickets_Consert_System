@@ -3,8 +3,6 @@ using MaterialSkin.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.Remoting.Contexts;
 using System.Windows.Forms;
 using Tickets_Consert_System.Data;
 using Tickets_Consert_System.Data.Models;
@@ -268,7 +266,7 @@ namespace Tickets_Consert_System.Forms
 
         private void TerminateContract_Click(object sender, EventArgs e)
         {
-            if(manager.SingerID == default(Guid))
+            if (manager.SingerID == default(Guid))
             {
                 MessageBox.Show("There aren't singer, which you represents");
                 return;

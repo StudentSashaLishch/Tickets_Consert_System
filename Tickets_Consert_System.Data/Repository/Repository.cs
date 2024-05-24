@@ -12,9 +12,8 @@ namespace Tickets_Consert_System.UtilityClasses
     {
         private static string logFile = "logFile.txt";
 
-        private static TicketsConsertSystemContext _context;
-        private static Repository<T> _instanse;
-        private static DbSet<T> _dbSet;
+        private TicketsConsertSystemContext _context;
+        private DbSet<T> _dbSet;
         private Repository(TicketsConsertSystemContext db)
         {
             _context = db;
@@ -23,10 +22,7 @@ namespace Tickets_Consert_System.UtilityClasses
 
         public static Repository<T> GetRepo(TicketsConsertSystemContext db)
         {
-            if (_instanse == null)
-                _instanse = new Repository<T>(db);
-
-            return _instanse;
+            return new Repository<T>(db); 
         }
 
         public IEnumerable<T> GetAll(Func<T, bool> predicate = null)
@@ -50,8 +46,8 @@ namespace Tickets_Consert_System.UtilityClasses
         {
             try
             {
-                _dbSet.AddAsync(entity);
-                _context.SaveChangesAsync();
+                _dbSet.Add(entity);
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -66,7 +62,7 @@ namespace Tickets_Consert_System.UtilityClasses
                 var entity = new T { ID = id };
                 
                 _dbSet.Remove(entity);
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -84,7 +80,7 @@ namespace Tickets_Consert_System.UtilityClasses
                     list.Add(new T { ID = id });
                 }
                 _dbSet.RemoveRange(list);
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             catch(Exception ex)
             {
@@ -97,7 +93,7 @@ namespace Tickets_Consert_System.UtilityClasses
             try
             {
                 _dbSet.RemoveRange(values);
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             catch(Exception ex)
             {
