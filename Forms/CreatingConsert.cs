@@ -33,7 +33,7 @@ namespace Tickets_Consert_System.Forms
 
         private void materialRaisedButton1_Click(object sender, EventArgs e)
         {
-            if(int.TryParse(NumberOfRows.Text, out int variableR) && int.TryParse(NumberOfPlaces.Text, out int variablePl) && decimal.TryParse(PriceTicket.Text, out decimal variablePr) && variableR > 0 && variablePl > 0 && variablePr > 0)
+            if(int.TryParse(NumberOfRows.Text, out int variableR) && int.TryParse(NumberOfPlaces.Text, out int variablePl) && decimal.TryParse(PriceTicket.Text, out decimal variablePr) && variableR > 0 && variablePl > 0 && variablePr > 0 && variablePl <= 200 && variablePr <= 200)
             {
                 var consert = new Consert()
                 {
@@ -44,7 +44,7 @@ namespace Tickets_Consert_System.Forms
                     TicketPrice = variablePr
                 };
                 Repository<Consert>
-                    .GetRepo(new TicketsConsertSystemContext())
+                    .GetRepo()
                     .Create(consert);
 
                 MessageBox.Show("Success!");

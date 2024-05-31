@@ -24,12 +24,10 @@ namespace Tickets_Consert_System.Forms
 
         private void materialRaisedButton2_Click(object sender, EventArgs e) //Close button
         {
-            var mainPage = new Form1();
-            mainPage.Show();
             this.Close();
         }
 
-        private void materialRaisedButton1_Click(object sender, EventArgs e)
+        private async void materialRaisedButton1_Click(object sender, EventArgs e)
         {
             if (LoginField.Text == null || PasswordField.Text == null || (!ManagerRole.Checked && !SingerRole.Checked && !ClientRole.Checked))
             {
@@ -39,8 +37,8 @@ namespace Tickets_Consert_System.Forms
 
             if (ManagerRole.Checked)
             {
-                var existedManager = Repository<Manager>
-                    .GetRepo(new TicketsConsertSystemContext())
+                var existedManager = await Repository<Manager>
+                    .GetRepo()
                     .GetFirst(manager => manager.Login == LoginField.Text);
                 
                 if (existedManager != null && existedManager.Password == PasswordField.Text)
@@ -55,8 +53,8 @@ namespace Tickets_Consert_System.Forms
             }
             else if (SingerRole.Checked)
             {
-                var existedSinger = Repository<Singer>
-                    .GetRepo(new TicketsConsertSystemContext())
+                var existedSinger = await Repository<Singer>
+                    .GetRepo()
                     .GetFirst(Singer => Singer.Login == LoginField.Text);
                 if (existedSinger != null && existedSinger.Password == PasswordField.Text)
                 {
@@ -70,8 +68,8 @@ namespace Tickets_Consert_System.Forms
             }
             else if (ClientRole.Checked)
             {
-                var existedClient = Repository<Client>
-                    .GetRepo(new TicketsConsertSystemContext())
+                var existedClient = await Repository<Client>
+                    .GetRepo()
                     .GetFirst(client => client.Login == LoginField.Text);
                 if (existedClient != null && existedClient.Password == PasswordField.Text)
                 {

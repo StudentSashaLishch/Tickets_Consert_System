@@ -145,7 +145,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="TicketsConsertSystemContext.cs" />
-    <Compile Include="UtilityClasses\Extractor.cs" />
     <Compile Include="UtilityClasses\Validator.cs" />
   </ItemGroup>
   <ItemGroup>

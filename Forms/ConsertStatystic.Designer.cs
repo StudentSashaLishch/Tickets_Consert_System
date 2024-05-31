@@ -39,7 +39,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Gray;
+            this.pictureBox2.BackColor = System.Drawing.Color.White;
             this.pictureBox2.Image = global::Tickets_Consert_System.Properties.Resources.Scene_image;
             this.pictureBox2.Location = new System.Drawing.Point(126, 76);
             this.pictureBox2.Name = "pictureBox2";

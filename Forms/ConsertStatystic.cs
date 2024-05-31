@@ -1,6 +1,7 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
 using System.Drawing;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Tickets_Consert_System.Data;
@@ -13,6 +14,7 @@ namespace Tickets_Consert_System.Forms
     {
         //private TicketsConsertSystemContext context { get; set; }
         private Consert Consert { get; set; }
+        private List<TicketSell> tickets { get; set; }
 
         public ConsertStatystic()
         {
@@ -33,24 +35,26 @@ namespace Tickets_Consert_System.Forms
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             ConsertHall.Size = new Size(250, 250);
-            float SizeRectangle = 250;
-            float widthCell = SizeRectangle / Consert.NumberPlacesInRow;
-            float heightCell = SizeRectangle / Consert.NumberRows;
+            int SizeRectangle = 250;
+            int widthCell = SizeRectangle / Consert.NumberPlacesInRow;
+            int heightCell = SizeRectangle / Consert.NumberRows;
 
             Graphics graphics = e.Graphics;
             Brush brush = new SolidBrush(Color.Gray);
             Pen pen = new Pen(Color.Black, 1);
 
             //drawing info about taked places
-            var ticketSells = Repository<TicketSell>.GetRepo(new TicketsConsertSystemContext())
-                .GetAll(t => t.ConsertID == Consert.ID);
-            foreach (var ticketSell in ticketSells)
+            GetTickets();
+            if (tickets != null)
             {
-                brush = new SolidBrush(Color.Red);
+                foreach (var ticketSell in tickets)
+                {
+                    brush = new SolidBrush(Color.Red);
 
-                graphics.FillRectangle(brush, (ticketSell.NumberOfPlace - 1) * widthCell, (ticketSell.NumberRow - 1) * heightCell, widthCell, heightCell);
+                    graphics.FillRectangle(brush, (ticketSell.NumberOfPlace - 1) * widthCell, (ticketSell.NumberRow - 1) * heightCell, widthCell, heightCell);
+                }
             }
-
+             
             for (int i = 1; i <= Consert.NumberPlacesInRow; i++) //drawing of vertical lines
                 graphics.DrawLine(pen, i * widthCell, 0, i * widthCell, SizeRectangle);
             for (int i = 1; i <= Consert.NumberRows; i++) //drawing of horizontal lines
@@ -64,7 +68,7 @@ namespace Tickets_Consert_System.Forms
             ViewStatystic();
         }
 
-        private void ViewStatystic()
+        private async void ViewStatystic()
         {
             /*
             var SoldTickets = context.Tickets
@@ -75,11 +79,19 @@ namespace Tickets_Consert_System.Forms
                     CountTickets = s.Count()
                 });
             */
-            int CountTickets = Repository<TicketSell>.GetRepo(new TicketsConsertSystemContext()).GetAll(t => t.ConsertID == Consert.ID).Count();
+            var Tickets = await Repository<TicketSell>.GetRepo().GetAll(t => t.ConsertID == Consert.ID);
+            var CountTickets = Tickets.Count;
+
             decimal Cash = CountTickets * Consert.TicketPrice;
 
             SoldTickets.Text = $"Total number of tickets sold: {CountTickets}";
             CashCollection.Text = $"Cash collection: {Cash}";
+        }
+
+        private async void GetTickets()
+        {
+            tickets = await Repository<TicketSell>.GetRepo()
+                .GetAll(t => t.ConsertID == Consert.ID);
         }
     }
 }

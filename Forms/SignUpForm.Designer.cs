@@ -61,7 +61,7 @@
             // 
             this.LoginField.Depth = 0;
             this.LoginField.Hint = "";
-            this.LoginField.Location = new System.Drawing.Point(103, 154);
+            this.LoginField.Location = new System.Drawing.Point(113, 154);
             this.LoginField.MaxLength = 32767;
             this.LoginField.MouseState = MaterialSkin.MouseState.HOVER;
             this.LoginField.Name = "LoginField";
@@ -69,7 +69,7 @@
             this.LoginField.SelectedText = "";
             this.LoginField.SelectionLength = 0;
             this.LoginField.SelectionStart = 0;
-            this.LoginField.Size = new System.Drawing.Size(377, 28);
+            this.LoginField.Size = new System.Drawing.Size(367, 28);
             this.LoginField.TabIndex = 2;
             this.LoginField.TabStop = false;
             this.LoginField.UseSystemPasswordChar = false;
@@ -98,7 +98,7 @@
             // 
             this.PasswordField.Depth = 0;
             this.PasswordField.Hint = "";
-            this.PasswordField.Location = new System.Drawing.Point(152, 322);
+            this.PasswordField.Location = new System.Drawing.Point(164, 322);
             this.PasswordField.MaxLength = 32767;
             this.PasswordField.MouseState = MaterialSkin.MouseState.HOVER;
             this.PasswordField.Name = "PasswordField";
@@ -106,7 +106,7 @@
             this.PasswordField.SelectedText = "";
             this.PasswordField.SelectionLength = 0;
             this.PasswordField.SelectionStart = 0;
-            this.PasswordField.Size = new System.Drawing.Size(328, 28);
+            this.PasswordField.Size = new System.Drawing.Size(316, 28);
             this.PasswordField.TabIndex = 4;
             this.PasswordField.TabStop = false;
             this.PasswordField.UseSystemPasswordChar = false;
@@ -152,7 +152,7 @@
             // 
             this.EmailField.Depth = 0;
             this.EmailField.Hint = "";
-            this.EmailField.Location = new System.Drawing.Point(103, 265);
+            this.EmailField.Location = new System.Drawing.Point(113, 265);
             this.EmailField.MaxLength = 32767;
             this.EmailField.MouseState = MaterialSkin.MouseState.HOVER;
             this.EmailField.Name = "EmailField";
@@ -160,7 +160,7 @@
             this.EmailField.SelectedText = "";
             this.EmailField.SelectionLength = 0;
             this.EmailField.SelectionStart = 0;
-            this.EmailField.Size = new System.Drawing.Size(377, 28);
+            this.EmailField.Size = new System.Drawing.Size(367, 28);
             this.EmailField.TabIndex = 8;
             this.EmailField.TabStop = false;
             this.EmailField.UseSystemPasswordChar = false;
@@ -262,7 +262,7 @@
             // 
             this.RepeatPasswordField.Depth = 0;
             this.RepeatPasswordField.Hint = "";
-            this.RepeatPasswordField.Location = new System.Drawing.Point(243, 361);
+            this.RepeatPasswordField.Location = new System.Drawing.Point(255, 361);
             this.RepeatPasswordField.MaxLength = 32767;
             this.RepeatPasswordField.MouseState = MaterialSkin.MouseState.HOVER;
             this.RepeatPasswordField.Name = "RepeatPasswordField";
@@ -270,7 +270,7 @@
             this.RepeatPasswordField.SelectedText = "";
             this.RepeatPasswordField.SelectionLength = 0;
             this.RepeatPasswordField.SelectionStart = 0;
-            this.RepeatPasswordField.Size = new System.Drawing.Size(237, 28);
+            this.RepeatPasswordField.Size = new System.Drawing.Size(225, 28);
             this.RepeatPasswordField.TabIndex = 15;
             this.RepeatPasswordField.TabStop = false;
             this.RepeatPasswordField.UseSystemPasswordChar = false;
@@ -288,9 +288,9 @@
             this.materialCheckBox1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialCheckBox1.Name = "materialCheckBox1";
             this.materialCheckBox1.Ripple = true;
-            this.materialCheckBox1.Size = new System.Drawing.Size(148, 30);
+            this.materialCheckBox1.Size = new System.Drawing.Size(146, 30);
             this.materialCheckBox1.TabIndex = 17;
-            this.materialCheckBox1.Text = "View password";
+            this.materialCheckBox1.Text = "Hide password";
             this.materialCheckBox1.UseVisualStyleBackColor = true;
             this.materialCheckBox1.CheckedChanged += new System.EventHandler(this.materialCheckBox1_CheckedChanged);
             // 

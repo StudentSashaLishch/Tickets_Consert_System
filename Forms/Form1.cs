@@ -20,8 +20,6 @@ namespace Tickets_Consert_System
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-
-            DeletePastConserts();
         }
 
         private void SignUp_Click(object sender, EventArgs e)
@@ -32,17 +30,6 @@ namespace Tickets_Consert_System
         private void LogIn_Click(object sender, EventArgs e)
         {
             UIManager.SwitchForm(this, new LogIn());
-        }
-        
-        private void DeletePastConserts()
-        {
-            var pastConserts = Repository<Consert>
-                .GetRepo(new TicketsConsertSystemContext())
-                .GetAll(consert => consert.DateOfConsert < DateTime.Now);
-
-            Repository<Consert>
-                .GetRepo(new TicketsConsertSystemContext())
-                .DeleteRange(pastConserts.ToList());
         }
     }
 }

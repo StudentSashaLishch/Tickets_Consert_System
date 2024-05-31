@@ -23,9 +23,9 @@ namespace Tickets_Consert_System.Forms
             //context = new TicketsConsertSystemContext();
         }
 
-        private void materialRaisedButton1_Click(object sender, EventArgs e) // RegisterButton
+        private async void materialRaisedButton1_Click(object sender, EventArgs e) // RegisterButton
         {
-            if (LoginField.Text == null || PasswordField.Text == null || FullNameField.Text == null || EmailField.Text == null || (!ManagerRole.Checked && !SingerRole.Checked && !ClientRole.Checked) || CheckPassword())
+            if (LoginField.Text == null || PasswordField.Text == null || FullNameField.Text == null || EmailField.Text == null || (!ManagerRole.Checked && !SingerRole.Checked && !ClientRole.Checked) || !CheckPassword())
             {
                 MessageBox.Show("Not all information has entered correctly!");
                 return;
@@ -33,11 +33,11 @@ namespace Tickets_Consert_System.Forms
 
             if (ManagerRole.Checked)
             {
-                if (Validator.ValidateLogin(LoginField.Text, User.Role.Manager) && Validator.ValidateEmail(EmailField.Text))
+                if (await Validator.ValidateLogin(LoginField.Text, User.Role.Manager) && Validator.ValidateEmail(EmailField.Text))
                 {
                     var newManager = new Manager(LoginField.Text, PasswordField.Text, FullNameField.Text, EmailField.Text);
                     Repository<Manager>
-                        .GetRepo(new TicketsConsertSystemContext())
+                        .GetRepo()
                         .Create(newManager);
                     MessageBox.Show("Succsses!");
 
@@ -50,11 +50,11 @@ namespace Tickets_Consert_System.Forms
             }
             else if (SingerRole.Checked)
             {
-                if (Validator.ValidateLogin(LoginField.Text, User.Role.Singer) && Validator.ValidateEmail(EmailField.Text))
+                if (await Validator.ValidateLogin(LoginField.Text, User.Role.Singer) && Validator.ValidateEmail(EmailField.Text))
                 {
                     var newSinger = new Singer(LoginField.Text, PasswordField.Text, FullNameField.Text, EmailField.Text);
                     Repository<Singer>
-                        .GetRepo(new TicketsConsertSystemContext())
+                        .GetRepo()
                         .Create(newSinger);
                     MessageBox.Show("Succsses!");
 
@@ -67,11 +67,11 @@ namespace Tickets_Consert_System.Forms
             }
             else if (ClientRole.Checked)
             {
-                if(Validator.ValidateLogin(LoginField.Text, User.Role.Client) &&  Validator.ValidateEmail(EmailField.Text))
+                if(await Validator.ValidateLogin(LoginField.Text, User.Role.Client) &&  Validator.ValidateEmail(EmailField.Text))
                 {
                     var newClient = new Client(LoginField.Text, PasswordField.Text, FullNameField.Text, EmailField.Text);
                     Repository<Client>
-                        .GetRepo(new TicketsConsertSystemContext())
+                        .GetRepo()
                         .Create(newClient);
                     MessageBox.Show("Succsses!");
 

@@ -3,6 +3,7 @@ using MaterialSkin;
 using MaterialSkin.Controls;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Collections.Generic;
 using Tickets_Consert_System.UtilityClasses;
 using Tickets_Consert_System.MainClasses;
 using Tickets_Consert_System.Data;
@@ -12,8 +13,9 @@ namespace Tickets_Consert_System.Forms
     public partial class BuyTicket : MaterialForm
     {
         //private TicketsConsertSystemContext context { get; set; }
-        public Client Client {  get; set; }
-        public  Consert Consert{ get; set; }
+        private Client Client {  get; set; }
+        private  Consert Consert { get; set; }
+        private List<TicketSell> tickets {  get; set; }
         public BuyTicket()
         {
             InitializeComponent();
@@ -30,13 +32,13 @@ namespace Tickets_Consert_System.Forms
             this.Client = client;
         }
 
-        private void BuyButton_Click(object sender, EventArgs e)
+        private async void BuyButton_Click(object sender, EventArgs e)
         {
             if (!int.TryParse(NumberOfRow.Text, out int variableR) || !int.TryParse(NumberOfPlace.Text, out int variableP) || variableR > Consert.NumberRows || variableP > Consert.NumberPlacesInRow || variableP <= 0 || variableR <= 0)
             {
                 MessageBox.Show("Invalid data!");
             }
-            else if (Repository<TicketSell>.GetRepo(new TicketsConsertSystemContext()).GetFirst(tick => Consert.ID == tick.ConsertID && variableR == tick.NumberRow && variableP == tick.NumberOfPlace) != null)
+            else if ( await Repository<TicketSell>.GetRepo().GetFirst(tick => Consert.ID == tick.ConsertID && variableR == tick.NumberRow && variableP == tick.NumberOfPlace) != null)
             {
                 MessageBox.Show("This ticket has already sealed!");
             }
@@ -55,13 +57,18 @@ namespace Tickets_Consert_System.Forms
                 };
 
                 Repository<TicketSell>
-                    .GetRepo(new TicketsConsertSystemContext())
+                    .GetRepo()
                     .Create(ticketSell);
 
                 Client.Ballanse -= Consert.TicketPrice;
                 Repository<Client>
-                    .GetRepo(new TicketsConsertSystemContext())
+                    .GetRepo()
                     .Update(Client);
+
+                Consert.CountSoldTickets++;
+                Repository<Consert>
+                    .GetRepo()
+                    .Update(Consert);
 
                 MessageBox.Show("Success!");
             }
@@ -79,16 +86,18 @@ namespace Tickets_Consert_System.Forms
             Pen pen = new Pen(Color.Black, 1);
 
             //drawing info about taked places
-            var ticketSells = Repository<TicketSell>.GetRepo(new TicketsConsertSystemContext())
-                .GetAll(t => t.ConsertID == Consert.ID);
-            foreach(var ticketSell in ticketSells)
+            GetTickets();
+            if (tickets != null)
             {
-                if(ticketSell.ClientID == Client.ID)
-                    brush = new SolidBrush(Color.Blue);
-                else
-                    brush = new SolidBrush(Color.Red);
+                foreach (var ticketSell in tickets)
+                {
+                    if (ticketSell.ClientID == Client.ID)
+                        brush = new SolidBrush(Color.Blue);
+                    else
+                        brush = new SolidBrush(Color.Red);
 
-                graphics.FillRectangle(brush, (ticketSell.NumberOfPlace - 1) * widthCell, (ticketSell.NumberRow - 1) * heightCell, widthCell, heightCell);
+                    graphics.FillRectangle(brush, (ticketSell.NumberOfPlace - 1) * widthCell, (ticketSell.NumberRow - 1) * heightCell, widthCell, heightCell);
+                }
             }
             brush = new SolidBrush(Color.Green);
             if (int.TryParse(NumberOfPlace.Text, out int place) && int.TryParse(NumberOfRow.Text, out int row) && (0 < place && place <= Consert.NumberPlacesInRow) && (0 < row && row <= Consert.NumberRows))
@@ -109,6 +118,12 @@ namespace Tickets_Consert_System.Forms
         private void NumberOfPlace_TextChanged(object sender, EventArgs e)
         {
             pictureBox1.Invalidate();
+        }
+
+        private async void GetTickets()
+        {
+            tickets = await Repository<TicketSell>.GetRepo()
+                .GetAll(t => t.ConsertID == Consert.ID);
         }
     }
 }

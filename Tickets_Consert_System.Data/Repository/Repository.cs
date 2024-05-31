@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using Tickets_Consert_System.Interfaces;
 using Tickets_Consert_System.Data;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.IO;
+using Tickets_Consert_System.MainClasses;
 
 namespace Tickets_Consert_System.UtilityClasses
 {
@@ -12,122 +14,151 @@ namespace Tickets_Consert_System.UtilityClasses
     {
         private static string logFile = "logFile.txt";
 
-        private TicketsConsertSystemContext _context;
         private DbSet<T> _dbSet;
-        private Repository(TicketsConsertSystemContext db)
+
+        public static Repository<T> GetRepo()
         {
-            _context = db;
-            _dbSet = _context.Set<T>();
+            return new Repository<T>(); 
         }
 
-        public static Repository<T> GetRepo(TicketsConsertSystemContext db)
-        {
-            return new Repository<T>(db); 
-        }
-
-        public IEnumerable<T> GetAll(Func<T, bool> predicate = null)
+        public async Task<List<T>> GetAll(Func<T, bool> predicate = null)
         {
             try
             {
-                if (predicate == null)
-                    return _dbSet.AsEnumerable();
-
-                _context.SaveChanges();
-                return _dbSet.AsEnumerable().Where(item => predicate(item));
-            }
-            catch (Exception ex)
-            {
-                WriteInLog(ex);
-                return null;
-            }
-        }
-
-        public void Create(T entity)
-        {
-            try
-            {
-                _dbSet.Add(entity);
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                WriteInLog(ex);
-            }
-        }
-
-        public void Delete(Guid id)
-        {
-            try
-            {
-                var entity = new T { ID = id };
-                
-                _dbSet.Remove(entity);
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                WriteInLog(ex);
-            }
-        }
-
-        public void DeleteRange(List<Guid> values)
-        {
-            try
-            {
-                List<T> list = new List<T>();
-                foreach (var id in values)
+                using (var _context = new TicketsConsertSystemContext())
                 {
-                    list.Add(new T { ID = id });
+                    _dbSet = _context.Set<T>();
+                    if (predicate == null)
+                        return await AsyncEnumerable.ToListAsync(_dbSet);
+
+                    return await AsyncEnumerable.ToListAsync(AsyncEnumerable.Where(_dbSet, item => predicate(item)));
                 }
-                _dbSet.RemoveRange(list);
-                _context.SaveChanges();
-            }
-            catch(Exception ex)
-            {
-                WriteInLog(ex);
-            }
-        }
-
-        public void DeleteRange(List<T> values)
-        {
-            try
-            {
-                _dbSet.RemoveRange(values);
-                _context.SaveChanges();
-            }
-            catch(Exception ex)
-            {
-                WriteInLog(ex);
-            }
-        }
-
-        public void Update(T updatedEntity)
-        {
-            try
-            {
-                T entity = _dbSet.FirstOrDefault(e => e.ID == updatedEntity.ID);
-                _context.Entry(entity).CurrentValues.SetValues(updatedEntity);
-                _context.Entry(entity).State = EntityState.Modified;
-
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                WriteInLog(ex);
-            }
-        }
-
-        public T GetFirst(Func<T, bool> predicate)
-        {
-            try
-            {
-                //_context.Dispose();
-                return _dbSet.AsEnumerable().FirstOrDefault(item => predicate(item));
             }
             catch (Exception ex)
             {
                 WriteInLog(ex);
                 return null;
+            }
+        }
+
+        public async void Create(T entity)
+        {
+            try
+            {
+                using (var _context = new TicketsConsertSystemContext())
+                {
+                    _dbSet = _context.Set<T>();
+                    await _dbSet.AddAsync(entity);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteInLog(ex);
+            }
+        }
+
+        public async void Delete(Guid id)
+        {
+            try
+            {
+                using (var _context = new TicketsConsertSystemContext())
+                {
+                    _dbSet = _context.Set<T>();
+                    var entity = new T { ID = id };
+
+                    _dbSet.Remove(entity);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteInLog(ex);
+            }
+        }
+
+        public async void DeleteRange(List<Guid> values)
+        {
+            try
+            {
+                using (var _context = new TicketsConsertSystemContext())
+                {
+                    _dbSet = _context.Set<T>();
+                    List<T> list = new List<T>();
+                    foreach (var id in values)
+                    {
+                        list.Add(new T { ID = id });
+                    }
+                    _dbSet.RemoveRange(list);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteInLog(ex);
+            }
+        }
+
+        public async void DeleteRange(List<T> values)
+        {
+            try
+            {
+                using (var _context = new TicketsConsertSystemContext())
+                {
+                    _dbSet = _context.Set<T>();
+                    _dbSet.RemoveRange(values);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteInLog(ex);
+            }
+        }
+
+        public async void Update(T updatedEntity)
+        {
+            try
+            {
+                using (var _context = new TicketsConsertSystemContext())
+                {
+                    _dbSet = _context.Set<T>();
+                    T entity = await AsyncEnumerable.FirstOrDefaultAsync(_dbSet, e => e.ID == updatedEntity.ID);
+                    _context.Entry(entity).CurrentValues.SetValues(updatedEntity);
+                    _context.Entry(entity).State = EntityState.Modified;
+
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteInLog(ex);
+            }
+        }
+
+        public async Task<T> GetFirst(Func<T, bool> predicate)
+        {
+            try
+            {
+                using (var _context = new TicketsConsertSystemContext())
+                {
+                    _dbSet = _context.Set<T>();
+                    return await AsyncEnumerable.FirstOrDefaultAsync(_dbSet, item => predicate(item));
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteInLog(ex);
+                return null;
+            }
+        }
+
+        public Task<T> GetComponent(Guid EntityID)
+        {
+            using (var _context = new TicketsConsertSystemContext())
+            {
+                _dbSet = _context.Set<T>();
+                return GetRepo().GetFirst(s => s.ID == EntityID);
             }
         }
 

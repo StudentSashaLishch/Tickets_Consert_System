@@ -1,8 +1,11 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tickets_Consert_System.Data;
 using Tickets_Consert_System.Data.UtilityClasses;
@@ -13,9 +16,6 @@ namespace Tickets_Consert_System.Forms
 {
     public partial class ClientForm : MaterialForm
     {
-        //private TicketsConsertSystemContext context { get; set; }
-        private UIManager.initOldForm funcs { get; set; }
-
         public Client client { get; set; }
 
         public ClientForm()
@@ -24,54 +24,23 @@ namespace Tickets_Consert_System.Forms
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-
-            //context = new TicketsConsertSystemContext();
         }
 
         public ClientForm(Client client) : this()
         {
-            var conserts = Repository<Consert>
-                                .GetRepo(new TicketsConsertSystemContext())
-                                .GetAll();
-
             this.client = client;
-            funcs = WriteInfoAboutMe;
-            funcs += WritePurchasedTickets;
-            funcs += () => WriteConsertsInfo(conserts);
-
-            funcs();
+            DataInitialize();
         }
 
-        public void WriteConsertsInfo(IEnumerable<Consert> list)
+        private async void DataInitialize()
         {
-            ConsertsList.Rows.Clear();
-            if (list == null)
-                return;
+            var conserts = await Repository<Consert>
+                .GetRepo()
+                .GetAll();
 
-            var context = new TicketsConsertSystemContext();
-            var query = from ticketSell in context.Tickets
-                        join consert in context.Conserts on ticketSell.ConsertID equals consert.ID
-                        join singer in context.Singers on consert.SingerID equals singer.ID
-                        group new { ticketSell, consert, singer } by new
-                        {
-                            ticketSell.ConsertID,
-                            consert.SingerID
-                        } into g
-                        select new
-                        {
-                            ConsertID = g.Key.ConsertID,
-                            SingerID = g.Key.SingerID,
-                            DateOfConsert = Extractor.GetConsert(g.Key.ConsertID).DateOfConsert,
-                            SingersName = Extractor.GetSinger(g.Key.SingerID).FullName,
-                            Price = Extractor.GetConsert(g.Key.ConsertID).TicketPrice,
-                            CountTickets = g.Count()
-                        };
-
-            foreach (var consert in query.ToList())
-            {
-                if(list.FirstOrDefault(c => c.ID == consert.ConsertID) != null)
-                    ConsertsList.Rows.Add(consert.ConsertID, consert.DateOfConsert.ToString("HH dd.MM.yyyy"), consert.SingersName, consert.Price, consert.CountTickets);
-            }
+            WriteInfoAboutMe();
+            WritePurchasedTickets();
+            OutputInformation.WriteConsertsInfo(ConsertsList, conserts);
         }
 
         public void WritePurchasedTickets()
@@ -91,7 +60,11 @@ namespace Tickets_Consert_System.Forms
                         };
             foreach (var ticket in query.ToList())
             {
-                TicketsList.Rows.Add(ticket.TicketSellID, ticket.DateOfConsert.ToString("HH dd.MM.yyyy"), ticket.SingerFullName, ticket.NumberRow, ticket.NumberOfPlace);
+                TicketsList.Rows.Add(ticket.TicketSellID, 
+                         ticket.DateOfConsert.ToString("HH dd.MM.yyyy"), 
+                         ticket.SingerFullName, 
+                         ticket.NumberRow, 
+                         ticket.NumberOfPlace);
             }
             context.Dispose();
         }
@@ -101,13 +74,13 @@ namespace Tickets_Consert_System.Forms
             MyLogin.Text = "Login: " + client.Login;
             MyName.Text = "Full name: " + client.FullName;
             MyEmail.Text = "Email: " + client.Email;
-            MyBalance.Text = "Balance: " + client.Ballanse.ToString();
+            MyBalance.Text = "Balance: " + client.Ballanse.ToString("#.##");
         }
 
-        private void materialRaisedButton1_Click(object sender, EventArgs e) // Buy ticket
+        private async void materialRaisedButton1_Click(object sender, EventArgs e) // Buy ticket
         {
-            var consert = Repository<Consert>
-                .GetRepo(new TicketsConsertSystemContext())
+            var consert = await Repository<Consert>
+                .GetRepo()
                 .GetFirst(Consert => Consert.ID == Guid.Parse(ConsertsList.CurrentRow.Cells[0].Value.ToString()));
             if (consert == null)
             {
@@ -115,18 +88,18 @@ namespace Tickets_Consert_System.Forms
                 return;
             }
 
-            UIManager.SwitchForm(this, new BuyTicket(consert, client), funcs);
+            UIManager.SwitchForm(this, new BuyTicket(consert, client), () => WritePurchasedTickets());
         }
 
         private void materialRaisedButton2_Click(object sender, EventArgs e)
         {
             var settingsPage = new FilterSettings();
-            UIManager.SwitchForm(this, settingsPage, () => WriteConsertsInfo(settingsPage.filteredInfo));
+            UIManager.SwitchForm(this, settingsPage, () => OutputInformation.WriteConsertsInfo(ConsertsList, settingsPage.filteredInfo));
         }
 
-        private void ShowAll_Click(object sender, EventArgs e)
+        private async void ShowAll_Click(object sender, EventArgs e)
         {
-            WriteConsertsInfo(Repository<Consert>.GetRepo(new TicketsConsertSystemContext()).GetAll());
+            OutputInformation.WriteConsertsInfo(ConsertsList, await Repository<Consert>.GetRepo().GetAll());
         }
 
         private void DeleteAccount_Click(object sender, EventArgs e)
@@ -135,7 +108,7 @@ namespace Tickets_Consert_System.Forms
 
             if (response == DialogResult.Yes)
             {
-                Repository<Client>.GetRepo(new TicketsConsertSystemContext()).Delete(client.ID);
+                Repository<Client>.GetRepo().Delete(client.ID);
                 this.Close();
             }
         }
