@@ -88,7 +88,7 @@ namespace Tickets_Consert_System.Forms
                 return;
             }
 
-            UIManager.SwitchForm(this, new BuyTicket(consert, client), () => WritePurchasedTickets());
+            UIManager.SwitchForm(this, new BuyTicket(consert, client), () => DataInitialize());
         }
 
         private void materialRaisedButton2_Click(object sender, EventArgs e)
@@ -108,7 +108,7 @@ namespace Tickets_Consert_System.Forms
 
             if (response == DialogResult.Yes)
             {
-                Repository<Client>.GetRepo().Delete(client.ID);
+                DeletingInfo.DeleteClient(client.ID);
                 this.Close();
             }
         }

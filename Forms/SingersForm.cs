@@ -253,9 +253,12 @@ namespace Tickets_Consert_System.Forms
             var conserts = await Repository<Consert>
                 .GetRepo()
                 .GetAll(c => c.SingerID == singer.ID);
-            Repository<Consert>
-                .GetRepo()
-                .DeleteRange(conserts.ToList());
+            
+            foreach(var consert in conserts)
+            {
+                DeletingInfo.DeleteConsert(consert.ID, true);
+            }
+
             manager.SingerID = default(Guid);
             Repository<Manager>
                 .GetRepo()
@@ -282,9 +285,7 @@ namespace Tickets_Consert_System.Forms
 
             if (response == DialogResult.Yes)
             {
-                Repository<Singer>
-                    .GetRepo()
-                    .Delete(singer.ID);
+                DeletingInfo.DeleteSinger(singer.ID);
                 this.Close();
             }
         }

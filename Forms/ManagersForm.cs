@@ -15,9 +15,6 @@ namespace Tickets_Consert_System.Forms
 {
     public partial class ManagersForm : MaterialForm
     {
-        //private TicketsConsertSystemContext context { get; set; }
-        private UIManager.initOldForm funcs { get; set; }
-
         public Manager manager { get; set; }
         public ManagersForm()
         {
@@ -25,8 +22,6 @@ namespace Tickets_Consert_System.Forms
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-
-            //context = new TicketsConsertSystemContext();
         }
 
         public ManagersForm(Manager manager) : this()
@@ -135,7 +130,7 @@ namespace Tickets_Consert_System.Forms
                 return;
             }
 
-            UIManager.SwitchForm(this, new CreatingConsert(manager.SingerID), funcs);
+            UIManager.SwitchForm(this, new CreatingConsert(manager.SingerID), () => DataInitialization());
         }
 
         private async void materialRaisedButton2_Click(object sender, EventArgs e) // Delete consert
@@ -144,9 +139,7 @@ namespace Tickets_Consert_System.Forms
                 return;
 
             Guid consertID = Guid.Parse(ConsertsList.CurrentRow.Cells[0].Value.ToString());
-            Repository<Consert>
-                .GetRepo()
-                .Delete(consertID);
+            DeletingInfo.DeleteConsert(consertID, true);
 
             OutputInformation.WriteConsertsInfo(ConsertsList, await Repository<Consert>.GetRepo().GetAll(c => c.SingerID == manager.SingerID));
         }
@@ -173,7 +166,7 @@ namespace Tickets_Consert_System.Forms
                 return;
             }
 
-            UIManager.SwitchForm(this, new ConsertStatystic(consert), funcs);
+            UIManager.SwitchForm(this, new ConsertStatystic(consert), () => DataInitialization());
         }
 
         private void Remove_Click(object sender, EventArgs e)
@@ -262,9 +255,12 @@ namespace Tickets_Consert_System.Forms
             var conserts = await Repository<Consert>
                 .GetRepo()
                 .GetAll(c => c.SingerID == manager.SingerID);
-            Repository<Consert>
-                .GetRepo()
-                .DeleteRange(conserts);
+            
+            foreach(var consert in conserts)
+            {
+                DeletingInfo.DeleteConsert(consert.ID, true);
+            }
+
             manager.SingerID = default(Guid);
             Repository<Manager>
                 .GetRepo()
@@ -280,7 +276,7 @@ namespace Tickets_Consert_System.Forms
 
             if (response == DialogResult.Yes)
             {
-                Repository<Manager>.GetRepo().Delete(manager.ID);
+                DeletingInfo.DeleteManager(manager.ID);
                 this.Close();
             }
         }
