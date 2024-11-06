@@ -20,7 +20,10 @@ namespace Tickets_Consert_System.UtilityClasses
                 var singer = await Repository<Singer>
                     .GetRepo()
                     .GetComponent(consert.SingerID);
-                ConsertsList.Rows.Add(consert.ID, consert.DateOfConsert.ToString("HH dd.MM.yyyy"), singer.FullName, consert.TicketPrice.ToString("#.##"), consert.CountSoldTickets);
+                var venue = await Repository<Venue>
+                    .GetRepo()
+                    .GetComponent(consert.VenueID);
+                ConsertsList.Rows.Add(consert.ID, consert.DateOfConsert.ToString("HH dd.MM.yyyy"), singer.FullName, venue.Address, consert.TicketPrice.ToString("#.##"), consert.CountSoldTickets);
             }
         }
         public static async void WriteContractProps(DataGridView ContractsList, List<ContractProposal> contracts)
@@ -57,7 +60,7 @@ namespace Tickets_Consert_System.UtilityClasses
         }
         public static async void WriteMessages(DataGridView MessagesList, Guid userID)
         {
-            var messages = await Repository<StatusMessage>.GetRepo().GetAll(m => m.receiver == userID);
+            var messages = await Repository<Data.Models.Message>.GetRepo().GetAll(m => m.receiver == userID);
             MessagesList.Rows.Clear();
             foreach (var message in messages)
             {

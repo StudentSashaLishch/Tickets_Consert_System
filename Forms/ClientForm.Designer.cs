@@ -30,6 +30,7 @@
         {
             this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
             this.Conserts = new System.Windows.Forms.TabPage();
+            this.materialRaisedButton3 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.ShowAll = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialRaisedButton2 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialRaisedButton1 = new MaterialSkin.Controls.MaterialRaisedButton();
@@ -37,6 +38,7 @@
             this.ConsertID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateOfConsert = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SingersName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AddressVenue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TicketsPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CountOfTIckets = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PurchasedTicks = new System.Windows.Forms.TabPage();
@@ -44,6 +46,7 @@
             this.PurchasedID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateOfConsertPurchased = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NameOfSingerPurchased = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NumberRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NumberPlace = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MyInfo = new System.Windows.Forms.TabPage();
@@ -71,11 +74,12 @@
             this.materialTabControl1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialTabControl1.Name = "materialTabControl1";
             this.materialTabControl1.SelectedIndex = 0;
-            this.materialTabControl1.Size = new System.Drawing.Size(917, 332);
+            this.materialTabControl1.Size = new System.Drawing.Size(938, 332);
             this.materialTabControl1.TabIndex = 0;
             // 
             // Conserts
             // 
+            this.Conserts.Controls.Add(this.materialRaisedButton3);
             this.Conserts.Controls.Add(this.ShowAll);
             this.Conserts.Controls.Add(this.materialRaisedButton2);
             this.Conserts.Controls.Add(this.materialRaisedButton1);
@@ -83,10 +87,26 @@
             this.Conserts.Location = new System.Drawing.Point(4, 25);
             this.Conserts.Name = "Conserts";
             this.Conserts.Padding = new System.Windows.Forms.Padding(3);
-            this.Conserts.Size = new System.Drawing.Size(909, 303);
+            this.Conserts.Size = new System.Drawing.Size(930, 303);
             this.Conserts.TabIndex = 1;
             this.Conserts.Text = "Conserts";
             this.Conserts.UseVisualStyleBackColor = true;
+            // 
+            // materialRaisedButton3
+            // 
+            this.materialRaisedButton3.AutoSize = true;
+            this.materialRaisedButton3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialRaisedButton3.Depth = 0;
+            this.materialRaisedButton3.Icon = null;
+            this.materialRaisedButton3.Location = new System.Drawing.Point(762, 134);
+            this.materialRaisedButton3.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRaisedButton3.Name = "materialRaisedButton3";
+            this.materialRaisedButton3.Primary = true;
+            this.materialRaisedButton3.Size = new System.Drawing.Size(163, 36);
+            this.materialRaisedButton3.TabIndex = 6;
+            this.materialRaisedButton3.Text = "Review a singer";
+            this.materialRaisedButton3.UseVisualStyleBackColor = true;
+            this.materialRaisedButton3.Click += new System.EventHandler(this.materialRaisedButton3_Click);
             // 
             // ShowAll
             // 
@@ -144,6 +164,7 @@
             this.ConsertID,
             this.DateOfConsert,
             this.SingersName,
+            this.AddressVenue,
             this.TicketsPrice,
             this.CountOfTIckets});
             this.ConsertsList.GridColor = System.Drawing.SystemColors.Window;
@@ -178,6 +199,13 @@
             this.SingersName.Name = "SingersName";
             this.SingersName.Width = 125;
             // 
+            // AddressVenue
+            // 
+            this.AddressVenue.HeaderText = "Address of venue";
+            this.AddressVenue.MinimumWidth = 6;
+            this.AddressVenue.Name = "AddressVenue";
+            this.AddressVenue.Width = 125;
+            // 
             // TicketsPrice
             // 
             this.TicketsPrice.HeaderText = "Ticket Price";
@@ -198,7 +226,7 @@
             this.PurchasedTicks.Location = new System.Drawing.Point(4, 25);
             this.PurchasedTicks.Name = "PurchasedTicks";
             this.PurchasedTicks.Padding = new System.Windows.Forms.Padding(3);
-            this.PurchasedTicks.Size = new System.Drawing.Size(771, 303);
+            this.PurchasedTicks.Size = new System.Drawing.Size(930, 303);
             this.PurchasedTicks.TabIndex = 2;
             this.PurchasedTicks.Text = "Purchased tickets";
             this.PurchasedTicks.UseVisualStyleBackColor = true;
@@ -211,6 +239,7 @@
             this.PurchasedID,
             this.DateOfConsertPurchased,
             this.NameOfSingerPurchased,
+            this.Address,
             this.NumberRow,
             this.NumberPlace});
             this.TicketsList.GridColor = System.Drawing.SystemColors.Window;
@@ -245,6 +274,13 @@
             this.NameOfSingerPurchased.Name = "NameOfSingerPurchased";
             this.NameOfSingerPurchased.Width = 125;
             // 
+            // Address
+            // 
+            this.Address.HeaderText = "Address of venue";
+            this.Address.MinimumWidth = 6;
+            this.Address.Name = "Address";
+            this.Address.Width = 125;
+            // 
             // NumberRow
             // 
             this.NumberRow.HeaderText = "Number of Row";
@@ -268,7 +304,7 @@
             this.MyInfo.Controls.Add(this.MyLogin);
             this.MyInfo.Location = new System.Drawing.Point(4, 25);
             this.MyInfo.Name = "MyInfo";
-            this.MyInfo.Size = new System.Drawing.Size(771, 303);
+            this.MyInfo.Size = new System.Drawing.Size(930, 303);
             this.MyInfo.TabIndex = 3;
             this.MyInfo.Text = "Information about me";
             this.MyInfo.UseVisualStyleBackColor = true;
@@ -340,7 +376,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(943, 473);
+            this.ClientSize = new System.Drawing.Size(963, 473);
             this.Controls.Add(this.materialTabSelector1);
             this.Controls.Add(this.materialTabControl1);
             this.Name = "ClientForm";
@@ -367,11 +403,6 @@
         private System.Windows.Forms.TabPage PurchasedTicks;
         private System.Windows.Forms.TabPage MyInfo;
         private System.Windows.Forms.DataGridView TicketsList;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PurchasedID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DateOfConsertPurchased;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NameOfSingerPurchased;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NumberRow;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NumberPlace;
         private System.Windows.Forms.Label MyEmail;
         private System.Windows.Forms.Label MyName;
         private System.Windows.Forms.Label MyLogin;
@@ -382,7 +413,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ConsertID;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateOfConsert;
         private System.Windows.Forms.DataGridViewTextBoxColumn SingersName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AddressVenue;
         private System.Windows.Forms.DataGridViewTextBoxColumn TicketsPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn CountOfTIckets;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PurchasedID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DateOfConsertPurchased;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NameOfSingerPurchased;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Address;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NumberRow;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NumberPlace;
+        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton3;
     }
 }

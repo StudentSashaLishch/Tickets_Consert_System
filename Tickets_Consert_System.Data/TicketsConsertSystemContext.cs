@@ -14,7 +14,10 @@ namespace Tickets_Consert_System.Data
         public DbSet<TicketSell> Tickets { get; set; }
         public DbSet<ContractProposal> ContractProposals { get; set; }
         public DbSet<Consert> Conserts { get; set; }
-        public DbSet<StatusMessage> Messages { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<Venue> Venues { get; set; }
+        public DbSet<Review> Complains { get; set; }
 
         public TicketsConsertSystemContext()
         {

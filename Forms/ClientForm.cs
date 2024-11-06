@@ -1,13 +1,10 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tickets_Consert_System.Data;
+using Tickets_Consert_System.Data.Models;
 using Tickets_Consert_System.Data.UtilityClasses;
 using Tickets_Consert_System.MainClasses;
 using Tickets_Consert_System.UtilityClasses;
@@ -16,7 +13,7 @@ namespace Tickets_Consert_System.Forms
 {
     public partial class ClientForm : MaterialForm
     {
-        public Client client { get; set; }
+        private Client client { get; set; }
 
         public ClientForm()
         {
@@ -43,7 +40,7 @@ namespace Tickets_Consert_System.Forms
             OutputInformation.WriteConsertsInfo(ConsertsList, conserts);
         }
 
-        public void WritePurchasedTickets()
+        public async void WritePurchasedTickets()
         {
             TicketsList.Rows.Clear();
             var context = new TicketsConsertSystemContext();
@@ -52,18 +49,24 @@ namespace Tickets_Consert_System.Forms
                         join singer in context.Singers on consert.SingerID equals singer.ID
                         select new
                         {
+                            Concert = consert,
                             TicketSellID = ticketSell.ID,
-                            DateOfConsert = consert.DateOfConsert,
                             SingerFullName = singer.FullName,
+                            //DateOfConsert = consert.DateOfConsert,
                             NumberRow = ticketSell.NumberRow,
                             NumberOfPlace = ticketSell.NumberOfPlace
                         };
             foreach (var ticket in query.ToList())
             {
-                TicketsList.Rows.Add(ticket.TicketSellID, 
-                         ticket.DateOfConsert.ToString("HH dd.MM.yyyy"), 
-                         ticket.SingerFullName, 
-                         ticket.NumberRow, 
+                var venue = await Repository<Venue>
+                    .GetRepo()
+                    .GetComponent(ticket.Concert.VenueID);
+
+                TicketsList.Rows.Add(ticket.TicketSellID,
+                         ticket.Concert.DateOfConsert.ToString("HH dd.MM.yyyy"),
+                         ticket.SingerFullName,
+                         venue.Address,
+                         ticket.NumberRow,
                          ticket.NumberOfPlace);
             }
             context.Dispose();
@@ -79,6 +82,12 @@ namespace Tickets_Consert_System.Forms
 
         private async void materialRaisedButton1_Click(object sender, EventArgs e) // Buy ticket
         {
+            if (client.IsBanned)
+            {
+                MessageBox.Show("You are banned");
+                return;
+            }
+
             var consert = await Repository<Consert>
                 .GetRepo()
                 .GetFirst(Consert => Consert.ID == Guid.Parse(ConsertsList.CurrentRow.Cells[0].Value.ToString()));
@@ -111,6 +120,18 @@ namespace Tickets_Consert_System.Forms
                 DeletingInfo.DeleteClient(client.ID);
                 this.Close();
             }
+        }
+
+        private async void materialRaisedButton3_Click(object sender, EventArgs e)
+        {
+            var concert = await Repository<Consert>
+                .GetRepo()
+                .GetFirst(Consert => Consert.ID == Guid.Parse(ConsertsList.CurrentRow.Cells[0].Value.ToString()));
+            var singer = await Repository<Singer>
+                .GetRepo()
+                .GetComponent(concert.SingerID);
+
+            UIManager.SwitchForm(this, new ReviewOfSinger(singer, client));
         }
     }
 }

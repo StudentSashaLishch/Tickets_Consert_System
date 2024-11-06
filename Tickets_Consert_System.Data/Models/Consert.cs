@@ -11,8 +11,8 @@ namespace Tickets_Consert_System.MainClasses
         public DateTime DateOfConsert { get; set; }
         [ForeignKey("SingerID")]
         public Guid SingerID { get; set; }
-        public int NumberRows { get; set; }
-        public int NumberPlacesInRow { get; set; }
+        [ForeignKey("VenueID")]
+        public Guid VenueID { get; set; }
         public decimal TicketPrice { get; set; }
         public int CountSoldTickets { get; set; }
 

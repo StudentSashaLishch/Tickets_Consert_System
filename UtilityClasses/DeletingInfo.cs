@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tickets_Consert_System.Data.Models;
 using Tickets_Consert_System.MainClasses;
 using Tickets_Consert_System.UtilityClasses;
 
@@ -54,17 +55,25 @@ namespace Tickets_Consert_System.Data.UtilityClasses
             var conserts = await Repository<Consert>
                 .GetRepo()
                 .GetAll(c => c.SingerID == singerID);
+
+            var contract = await Repository<Contract>
+                .GetRepo()
+                .GetFirst(c => c.singer == singerID);
+
             var manager = await Repository<Manager>
                 .GetRepo()
-                .GetFirst(m => m.SingerID == singerID);
-            manager.SingerID = default(Guid);
-
-            Repository<Singer>
-                .GetRepo()
-                .Delete(singerID);
+                .GetFirst(m => m.ContractID == contract.ID);
+            manager.ContractID = default(Guid);
             Repository<Manager>
                 .GetRepo()
                 .Update(manager);
+
+            Repository<Contract>
+                .GetRepo()
+                .Delete(contract.ID);
+            Repository<Singer>
+                .GetRepo()
+                .Delete(singerID);
 
             foreach(var consert in conserts)
             {
@@ -77,10 +86,24 @@ namespace Tickets_Consert_System.Data.UtilityClasses
             var manager = await Repository<Manager>
                 .GetRepo()
                 .GetFirst(m => m.ID == managerID);
+            var contract = await Repository<Contract>
+                .GetRepo()
+                .GetFirst(c => c.manager == managerID);
             var conserts = await Repository<Consert>
                 .GetRepo()
-                .GetAll(c => c.SingerID == manager.SingerID);
+                .GetAll(c => c.SingerID == contract.singer);
+            var singer = await Repository<Singer>
+                .GetRepo()
+                .GetComponent(contract.singer);
 
+            singer.ContractID = default(Guid);
+            Repository<Singer>
+                .GetRepo()
+                .Update(singer);
+
+            Repository<Contract>
+                .GetRepo()
+                .Delete(contract.ID);
             Repository<Manager>
                 .GetRepo()
                 .Delete(managerID);

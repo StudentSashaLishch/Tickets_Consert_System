@@ -59,7 +59,7 @@ namespace Tickets_Consert_System.Forms
             foreach (var contract in contracts)
             {
                 var manager = await Repository<Manager>.GetRepo().GetComponent(contract.ManagerID);
-                OfferedContracts.Rows.Add(contract.ID, manager.FullName, manager.Email);
+                OfferedContracts.Rows.Add(contract.ID, manager.FullName, manager.Email, contract.ManagersPrice);
             }
         }
 
@@ -71,7 +71,7 @@ namespace Tickets_Consert_System.Forms
 
             var myManager = await Repository<Manager>
                 .GetRepo()
-                .GetFirst(manager => manager.SingerID == singer.ID);
+                .GetFirst(manager => manager.ContractID == singer.ContractID);
             if (myManager != null)
             {
                 MyManagersName.Text = "The name of my manager: " + myManager.FullName;
@@ -90,7 +90,7 @@ namespace Tickets_Consert_System.Forms
 
         private async void WriteMessages()
         {
-            var messages = await Repository<StatusMessage>
+            var messages = await Repository<Data.Models.Message>
                 .GetRepo()
                 .GetAll(m => m.receiver == singer.ID);
             MessagesList.Rows.Clear();
@@ -100,48 +100,76 @@ namespace Tickets_Consert_System.Forms
             }
         }
 
-        private async void materialRaisedButton1_Click(object sender, EventArgs e)
+        private async void materialRaisedButton1_Click(object sender, EventArgs e) // Accept proposal button
         {
-            Guid ContractID = Guid.Parse(OfferedContracts.CurrentRow.Cells[0].Value.ToString());
-            ContractProposal contract = await Repository<ContractProposal>
+            if (singer.IsBanned)
+            {
+                MessageBox.Show("You are banned");
+                return;
+            }
+
+            Guid ContractProposalID = Guid.Parse(OfferedContracts.CurrentRow.Cells[0].Value.ToString());
+            ContractProposal contractProposal = await Repository<ContractProposal>
                 .GetRepo()
-                .GetFirst(Contract => Contract.ID == ContractID);
+                .GetFirst(Contract => Contract.ID == ContractProposalID);
+
+            var contract = new Contract()
+            {
+                singer = singer.ID,
+                manager = contractProposal.ManagerID,
+                ManagersPrice = contractProposal.ManagersPrice
+            };
+            Repository<Contract>
+                .GetRepo()
+                .Create(contract);
 
             var proposals = await Repository<ContractProposal>
                 .GetRepo()
-                .GetAll(Contract => Contract.SingerID == singer.ID || Contract.ManagerID == contract.ManagerID);
+                .GetAll(Contract => Contract.SingerID == singer.ID || Contract.ManagerID == contractProposal.ManagerID);
             Repository<ContractProposal>
                 .GetRepo()
                 .DeleteRange(proposals.ToList());
 
-            var manager = await Repository<Manager>.GetRepo().GetComponent(contract.ManagerID);
-            manager.SingerID = singer.ID;
+            var manager = await Repository<Manager>.GetRepo().GetComponent(contractProposal.ManagerID);
+            manager.ContractID = contract.ID;
+            singer.ContractID = contract.ID;
             Repository<Manager>
                 .GetRepo()
                 .Update(manager);
+            Repository<Singer>
+                .GetRepo()
+                .Update(singer);
 
-            var NewMessage = new StatusMessage(manager.ID, $"Singer {singer.FullName} has accepted your contract offer");
-            Repository<StatusMessage>
+            var NewMessage = new Data.Models.Message(singer.ID, manager.ID, $"Singer {singer.FullName} has accepted your contract offer");
+            Repository<Data.Models.Message>
                 .GetRepo()
                 .Create(NewMessage);
 
-            Repository<ContractProposal>
-                .GetRepo()
-                .Delete(ContractID);
+            /*
+             * Repository<ContractProposal>
+             *  .GetRepo()
+             *  .Delete(ContractProposalID);
+             */
 
             WriteContractProps();
             WriteInfoAboutMe();
         }
 
-        private async void materialRaisedButton2_Click(object sender, EventArgs e)
+        private async void materialRaisedButton2_Click(object sender, EventArgs e) // Reject proposal button
         {
+            if (singer.IsBanned)
+            {
+                MessageBox.Show("You are banned");
+                return;
+            }
+
             Guid ContractID = Guid.Parse(OfferedContracts.CurrentRow.Cells[0].Value.ToString());
 
             var contract = await Repository<ContractProposal>
                 .GetRepo()
                 .GetFirst(Contract => Contract.ID == ContractID);
-            var NewMessage = new StatusMessage(contract.ManagerID, $"Singer {singer.FullName} rejected your contract offer");
-            Repository<StatusMessage>
+            var NewMessage = new Data.Models.Message(singer.ID, contract.ManagerID, $"Singer {singer.FullName} rejected your contract offer");
+            Repository<Data.Models.Message>
                 .GetRepo()
                 .Create(NewMessage);
 
@@ -179,6 +207,12 @@ namespace Tickets_Consert_System.Forms
 
         private async void ChooseManager_Click(object sender, EventArgs e)
         {
+            if (singer.IsBanned)
+            {
+                MessageBox.Show("You are banned");
+                return;
+            }
+
             var managerID = Guid.Parse(ManagersList.CurrentRow.Cells[0].Value.ToString());
             if (ManagersList.CurrentRow.Cells[0].Value == null)
                 return;
@@ -189,10 +223,18 @@ namespace Tickets_Consert_System.Forms
             if (proposal != null) 
                 return;
 
+            double managersPrice;
+            if (!double.TryParse(ManagersPrice.Text, out managersPrice))
+            {
+                MessageBox.Show("Enter the amount you are willing to pay the manager");
+                return;
+            }
+
             var Proposal = new ContractProposal()
             {
                 ManagerID = managerID,
                 SingerID = singer.ID,
+                ManagersPrice = managersPrice,
                 IsForSinger = false
             };
             Repository<ContractProposal>
@@ -205,7 +247,7 @@ namespace Tickets_Consert_System.Forms
         private void Remove_Click(object sender, EventArgs e)
         {
             var messageID = Guid.Parse(MessagesList.CurrentRow.Cells[0].Value.ToString());
-            Repository<StatusMessage>
+            Repository<Data.Models.Message>
                 .GetRepo()
                 .Delete(messageID);
 
@@ -223,7 +265,7 @@ namespace Tickets_Consert_System.Forms
 
             foreach (var id in MessageIDs)
             {
-                Repository<StatusMessage>
+                Repository<Data.Models.Message>
                     .GetRepo()
                     .DeleteRange(MessageIDs);
             }
@@ -231,9 +273,15 @@ namespace Tickets_Consert_System.Forms
             WriteMessages();
         }
 
-        private async void TerminateContract_Click(object sender, EventArgs e)
+        private void TerminateContract_Click(object sender, EventArgs e)
         {
-            if (!await AreThereMyManager())
+            if (singer.IsBanned)
+            {
+                MessageBox.Show("You are banned");
+                return;
+            }
+
+            if (!AreThereMyManager())
             {
                 MessageBox.Show("You dont have manager");
                 return;
@@ -247,19 +295,26 @@ namespace Tickets_Consert_System.Forms
 
         private async void TerminateContractFunc()
         {
+            var contract = await Repository<Contract>
+                .GetRepo()
+                .GetFirst(c => c.singer == singer.ID);
             var manager = await Repository<Manager>
                 .GetRepo()
-                .GetFirst(m => m.SingerID == singer.ID);
+                .GetFirst(m => m.ContractID == singer.ContractID);
             var conserts = await Repository<Consert>
                 .GetRepo()
                 .GetAll(c => c.SingerID == singer.ID);
-            
+
+            Repository<Contract>
+                .GetRepo()
+                .Delete(contract.ID);
             foreach(var consert in conserts)
             {
                 DeletingInfo.DeleteConsert(consert.ID, true);
             }
 
-            manager.SingerID = default(Guid);
+            singer.ContractID = default(Guid);
+            manager.ContractID = default(Guid);
             Repository<Manager>
                 .GetRepo()
                 .Update(manager);
@@ -268,12 +323,9 @@ namespace Tickets_Consert_System.Forms
             WriteInfoAboutMe();
         }
 
-        private async Task<bool> AreThereMyManager()
+        private bool AreThereMyManager()
         {
-            var manager = await Repository<Manager>
-                .GetRepo()
-                .GetFirst(m => m.SingerID == singer.ID);
-            if (manager == null)
+            if (singer.ContractID == default(Guid))
                 return false;
             else
                 return true;

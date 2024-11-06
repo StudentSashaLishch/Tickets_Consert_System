@@ -39,10 +39,6 @@
             this.materialRaisedButton4 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialRaisedButton5 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.OfferedContracts = new System.Windows.Forms.DataGridView();
-            this.ProposalID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ManagerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ConsertsManager = new System.Windows.Forms.TabPage();
             this.SeeStatictics = new MaterialSkin.Controls.MaterialRaisedButton();
             this.ShowAll = new MaterialSkin.Controls.MaterialRaisedButton();
@@ -58,6 +54,7 @@
             this.DateOfReceiving = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MyInfo = new System.Windows.Forms.TabPage();
+            this.costOfServices = new System.Windows.Forms.Label();
             this.TerminateContract = new MaterialSkin.Controls.MaterialRaisedButton();
             this.DeleteAccount = new MaterialSkin.Controls.MaterialRaisedButton();
             this.MySingersEmail = new System.Windows.Forms.Label();
@@ -66,9 +63,16 @@
             this.MyName = new System.Windows.Forms.Label();
             this.MyLogin = new System.Windows.Forms.Label();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
+            this.ManagersPrice = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.ProposalID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ManagerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CostServices = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ConsertID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateOfConsert = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SingersName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AddressVenue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TicketsPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CountTickets = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ManagersMenu.SuspendLayout();
@@ -100,6 +104,7 @@
             // 
             // Singers
             // 
+            this.Singers.Controls.Add(this.ManagersPrice);
             this.Singers.Controls.Add(this.ChooseSinger);
             this.Singers.Controls.Add(this.SingersList);
             this.Singers.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -109,7 +114,6 @@
             this.Singers.Size = new System.Drawing.Size(876, 298);
             this.Singers.TabIndex = 1;
             this.Singers.Text = "Singers";
-            this.Singers.UseVisualStyleBackColor = true;
             // 
             // ChooseSinger
             // 
@@ -221,7 +225,8 @@
             this.ProposalID,
             this.ManagerID,
             this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4});
+            this.dataGridViewTextBoxColumn4,
+            this.CostServices});
             this.OfferedContracts.GridColor = System.Drawing.SystemColors.Window;
             this.OfferedContracts.Location = new System.Drawing.Point(3, 3);
             this.OfferedContracts.Name = "OfferedContracts";
@@ -231,38 +236,6 @@
             this.OfferedContracts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.OfferedContracts.Size = new System.Drawing.Size(696, 292);
             this.OfferedContracts.TabIndex = 2;
-            // 
-            // ProposalID
-            // 
-            this.ProposalID.HeaderText = "Proposal ID";
-            this.ProposalID.MinimumWidth = 6;
-            this.ProposalID.Name = "ProposalID";
-            this.ProposalID.Visible = false;
-            this.ProposalID.Width = 125;
-            // 
-            // ManagerID
-            // 
-            this.ManagerID.HeaderText = "SingerID";
-            this.ManagerID.MinimumWidth = 6;
-            this.ManagerID.Name = "ManagerID";
-            this.ManagerID.Visible = false;
-            this.ManagerID.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.dataGridViewTextBoxColumn3.HeaderText = "Full Name of Singer";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 153;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.dataGridViewTextBoxColumn4.HeaderText = "Email of Singer";
-            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.Width = 126;
             // 
             // ConsertsManager
             // 
@@ -368,6 +341,7 @@
             this.ConsertID,
             this.DateOfConsert,
             this.SingersName,
+            this.AddressVenue,
             this.TicketsPrice,
             this.CountTickets});
             this.ConsertsList.GridColor = System.Drawing.SystemColors.Window;
@@ -468,6 +442,7 @@
             // 
             // MyInfo
             // 
+            this.MyInfo.Controls.Add(this.costOfServices);
             this.MyInfo.Controls.Add(this.TerminateContract);
             this.MyInfo.Controls.Add(this.DeleteAccount);
             this.MyInfo.Controls.Add(this.MySingersEmail);
@@ -482,6 +457,15 @@
             this.MyInfo.TabIndex = 2;
             this.MyInfo.Text = "Info About Me";
             this.MyInfo.UseVisualStyleBackColor = true;
+            // 
+            // costOfServices
+            // 
+            this.costOfServices.AutoSize = true;
+            this.costOfServices.Location = new System.Drawing.Point(6, 94);
+            this.costOfServices.Name = "costOfServices";
+            this.costOfServices.Size = new System.Drawing.Size(154, 16);
+            this.costOfServices.TabIndex = 7;
+            this.costOfServices.Text = "The cost of my services: ";
             // 
             // TerminateContract
             // 
@@ -571,6 +555,63 @@
             this.materialTabSelector1.TabIndex = 1;
             this.materialTabSelector1.Text = "materialTabSelector1";
             // 
+            // ManagersPrice
+            // 
+            this.ManagersPrice.Depth = 0;
+            this.ManagersPrice.Hint = "";
+            this.ManagersPrice.Location = new System.Drawing.Point(705, 264);
+            this.ManagersPrice.MaxLength = 32767;
+            this.ManagersPrice.MouseState = MaterialSkin.MouseState.HOVER;
+            this.ManagersPrice.Name = "ManagersPrice";
+            this.ManagersPrice.PasswordChar = '\0';
+            this.ManagersPrice.SelectedText = "";
+            this.ManagersPrice.SelectionLength = 0;
+            this.ManagersPrice.SelectionStart = 0;
+            this.ManagersPrice.Size = new System.Drawing.Size(153, 28);
+            this.ManagersPrice.TabIndex = 2;
+            this.ManagersPrice.TabStop = false;
+            this.ManagersPrice.Text = "Enter the sum";
+            this.ManagersPrice.UseSystemPasswordChar = false;
+            // 
+            // ProposalID
+            // 
+            this.ProposalID.HeaderText = "Proposal ID";
+            this.ProposalID.MinimumWidth = 6;
+            this.ProposalID.Name = "ProposalID";
+            this.ProposalID.Visible = false;
+            this.ProposalID.Width = 125;
+            // 
+            // ManagerID
+            // 
+            this.ManagerID.HeaderText = "SingerID";
+            this.ManagerID.MinimumWidth = 6;
+            this.ManagerID.Name = "ManagerID";
+            this.ManagerID.Visible = false;
+            this.ManagerID.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn3.HeaderText = "Full Name of Singer";
+            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Width = 153;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn4.HeaderText = "Email of Singer";
+            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.Width = 126;
+            // 
+            // CostServices
+            // 
+            this.CostServices.HeaderText = "Cost of services";
+            this.CostServices.MinimumWidth = 6;
+            this.CostServices.Name = "CostServices";
+            this.CostServices.Width = 125;
+            // 
             // ConsertID
             // 
             this.ConsertID.HeaderText = "ConsertID";
@@ -592,6 +633,13 @@
             this.SingersName.MinimumWidth = 6;
             this.SingersName.Name = "SingersName";
             this.SingersName.Width = 125;
+            // 
+            // AddressVenue
+            // 
+            this.AddressVenue.HeaderText = "Address of venue";
+            this.AddressVenue.MinimumWidth = 6;
+            this.AddressVenue.Name = "AddressVenue";
+            this.AddressVenue.Width = 125;
             // 
             // TicketsPrice
             // 
@@ -666,18 +714,22 @@
         private System.Windows.Forms.DataGridView OfferedContracts;
         private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton4;
         private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProposalID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ManagerID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateOfReceiving;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private MaterialSkin.Controls.MaterialRaisedButton TerminateContract;
         private MaterialSkin.Controls.MaterialRaisedButton DeleteAccount;
+        private System.Windows.Forms.Label costOfServices;
+        private MaterialSkin.Controls.MaterialSingleLineTextField ManagersPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProposalID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ManagerID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CostServices;
         private System.Windows.Forms.DataGridViewTextBoxColumn ConsertID;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateOfConsert;
         private System.Windows.Forms.DataGridViewTextBoxColumn SingersName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AddressVenue;
         private System.Windows.Forms.DataGridViewTextBoxColumn TicketsPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn CountTickets;
     }

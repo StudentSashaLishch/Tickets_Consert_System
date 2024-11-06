@@ -34,5 +34,10 @@ namespace Tickets_Consert_System
         {
             UIManager.SwitchForm(this, new LogIn());
         }
+
+        private void materialRaisedButton1_Click(object sender, EventArgs e)
+        {
+            UIManager.SwitchForm(this, new AdminsForm());
+        }
     }
 }

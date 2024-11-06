@@ -7,14 +7,17 @@ using System.Windows.Forms;
 using Tickets_Consert_System.Data;
 using Tickets_Consert_System.MainClasses;
 using Tickets_Consert_System.UtilityClasses;
+using System.Deployment.Internal;
+using Tickets_Consert_System.Data.Models;
 
 namespace Tickets_Consert_System.Forms
 {
     public partial class ConsertStatystic : MaterialForm
     {
-        //private TicketsConsertSystemContext context { get; set; }
         private Consert Consert { get; set; }
         private List<TicketSell> tickets { get; set; }
+        private Venue Venue { get; set; }
+        
 
         public ConsertStatystic()
         {
@@ -22,8 +25,16 @@ namespace Tickets_Consert_System.Forms
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            InitializeComponent();
 
             //context = new TicketsConsertSystemContext();
+        }
+
+        private async void InitializeVenue()
+        {
+            Venue = await Repository<Venue>
+                .GetRepo()
+                .GetComponent(Consert.VenueID);
         }
 
         public ConsertStatystic(Consert consert) : this()
@@ -36,8 +47,8 @@ namespace Tickets_Consert_System.Forms
         {
             ConsertHall.Size = new Size(250, 250);
             int SizeRectangle = 250;
-            int widthCell = SizeRectangle / Consert.NumberPlacesInRow;
-            int heightCell = SizeRectangle / Consert.NumberRows;
+            int widthCell = SizeRectangle / Venue.NumberOfPlacesInRow;
+            int heightCell = SizeRectangle / Venue.NumberOfRows;
 
             Graphics graphics = e.Graphics;
             Brush brush = new SolidBrush(Color.Gray);
@@ -55,9 +66,9 @@ namespace Tickets_Consert_System.Forms
                 }
             }
              
-            for (int i = 1; i <= Consert.NumberPlacesInRow; i++) //drawing of vertical lines
+            for (int i = 1; i <= Venue.NumberOfPlacesInRow; i++) //drawing of vertical lines
                 graphics.DrawLine(pen, i * widthCell, 0, i * widthCell, SizeRectangle);
-            for (int i = 1; i <= Consert.NumberRows; i++) //drawing of horizontal lines
+            for (int i = 1; i <= Venue.NumberOfRows; i++) //drawing of horizontal lines
                 graphics.DrawLine(pen, 0, i * heightCell, SizeRectangle, i * heightCell);
             graphics.DrawRectangle(pen, 0, 0, SizeRectangle, SizeRectangle);
         }

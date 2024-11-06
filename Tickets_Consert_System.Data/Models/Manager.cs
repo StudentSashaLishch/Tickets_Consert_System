@@ -10,8 +10,8 @@ namespace Tickets_Consert_System
 {
     public class Manager : User
     {
-        [ForeignKey("SingerID")]
-        public Guid SingerID { get; set; }
+        [ForeignKey("ContractID")]
+        public Guid ContractID { get; set; }
 
         public Manager() : base()
         {

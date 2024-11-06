@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Tickets_Consert_System.MainClasses
 {
     public class Singer : User
     {
+        [ForeignKey("ContractID")]
+        public Guid ContractID { get; set; }
 
         public Singer() : base()
         {

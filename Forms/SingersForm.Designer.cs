@@ -30,6 +30,7 @@
         {
             this.SingersTabs = new MaterialSkin.Controls.MaterialTabControl();
             this.Managers = new System.Windows.Forms.TabPage();
+            this.ManagersPrice = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.ChooseManager = new MaterialSkin.Controls.MaterialRaisedButton();
             this.ManagersList = new System.Windows.Forms.DataGridView();
             this.ManagerID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -42,18 +43,22 @@
             this.ProposalID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FullName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CostServices = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ConsertsInfo = new System.Windows.Forms.TabPage();
             this.SeeStatictics = new MaterialSkin.Controls.MaterialRaisedButton();
             this.ShowAll = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialRaisedButton3 = new MaterialSkin.Controls.MaterialRaisedButton();
             this.ConsertsList = new System.Windows.Forms.DataGridView();
+            this.ConsertID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateOfConsert = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SingersName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VenueAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TicketsPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CountTickets = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Messages = new System.Windows.Forms.TabPage();
             this.RemoveAll = new MaterialSkin.Controls.MaterialRaisedButton();
             this.Remove = new MaterialSkin.Controls.MaterialRaisedButton();
             this.MessagesList = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateOfReceiving = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MyInfo = new System.Windows.Forms.TabPage();
             this.TerminateContract = new MaterialSkin.Controls.MaterialRaisedButton();
             this.DeleteAccount = new MaterialSkin.Controls.MaterialRaisedButton();
@@ -63,11 +68,9 @@
             this.MyName = new System.Windows.Forms.Label();
             this.MyLogin = new System.Windows.Forms.Label();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
-            this.ConsertID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateOfConsert = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SingersName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TicketsPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CountTickets = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateOfReceiving = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SingersTabs.SuspendLayout();
             this.Managers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ManagersList)).BeginInit();
@@ -97,6 +100,7 @@
             // 
             // Managers
             // 
+            this.Managers.Controls.Add(this.ManagersPrice);
             this.Managers.Controls.Add(this.ChooseManager);
             this.Managers.Controls.Add(this.ManagersList);
             this.Managers.Location = new System.Drawing.Point(4, 25);
@@ -104,7 +108,24 @@
             this.Managers.Size = new System.Drawing.Size(929, 305);
             this.Managers.TabIndex = 3;
             this.Managers.Text = "Managers";
-            this.Managers.UseVisualStyleBackColor = true;
+            // 
+            // ManagersPrice
+            // 
+            this.ManagersPrice.Depth = 0;
+            this.ManagersPrice.Hint = "";
+            this.ManagersPrice.Location = new System.Drawing.Point(705, 267);
+            this.ManagersPrice.MaxLength = 32767;
+            this.ManagersPrice.MouseState = MaterialSkin.MouseState.HOVER;
+            this.ManagersPrice.Name = "ManagersPrice";
+            this.ManagersPrice.PasswordChar = '\0';
+            this.ManagersPrice.SelectedText = "";
+            this.ManagersPrice.SelectionLength = 0;
+            this.ManagersPrice.SelectionStart = 0;
+            this.ManagersPrice.Size = new System.Drawing.Size(176, 28);
+            this.ManagersPrice.TabIndex = 3;
+            this.ManagersPrice.TabStop = false;
+            this.ManagersPrice.Text = "Enter the sum";
+            this.ManagersPrice.UseSystemPasswordChar = false;
             // 
             // ChooseManager
             // 
@@ -216,7 +237,8 @@
             this.OfferedContracts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ProposalID,
             this.FullName,
-            this.Email});
+            this.Email,
+            this.CostServices});
             this.OfferedContracts.GridColor = System.Drawing.SystemColors.Window;
             this.OfferedContracts.Location = new System.Drawing.Point(6, 6);
             this.OfferedContracts.Name = "OfferedContracts";
@@ -250,6 +272,13 @@
             this.Email.MinimumWidth = 6;
             this.Email.Name = "Email";
             this.Email.Width = 141;
+            // 
+            // CostServices
+            // 
+            this.CostServices.HeaderText = "Cost of services";
+            this.CostServices.MinimumWidth = 6;
+            this.CostServices.Name = "CostServices";
+            this.CostServices.Width = 125;
             // 
             // ConsertsInfo
             // 
@@ -321,6 +350,7 @@
             this.ConsertID,
             this.DateOfConsert,
             this.SingersName,
+            this.VenueAddress,
             this.TicketsPrice,
             this.CountTickets});
             this.ConsertsList.GridColor = System.Drawing.SystemColors.Window;
@@ -332,6 +362,49 @@
             this.ConsertsList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ConsertsList.Size = new System.Drawing.Size(677, 292);
             this.ConsertsList.TabIndex = 2;
+            // 
+            // ConsertID
+            // 
+            this.ConsertID.HeaderText = "ConsertID";
+            this.ConsertID.MinimumWidth = 6;
+            this.ConsertID.Name = "ConsertID";
+            this.ConsertID.Visible = false;
+            this.ConsertID.Width = 125;
+            // 
+            // DateOfConsert
+            // 
+            this.DateOfConsert.HeaderText = "Date Of Consert";
+            this.DateOfConsert.MinimumWidth = 6;
+            this.DateOfConsert.Name = "DateOfConsert";
+            this.DateOfConsert.Width = 125;
+            // 
+            // SingersName
+            // 
+            this.SingersName.HeaderText = "Name of Singer";
+            this.SingersName.MinimumWidth = 6;
+            this.SingersName.Name = "SingersName";
+            this.SingersName.Width = 125;
+            // 
+            // VenueAddress
+            // 
+            this.VenueAddress.HeaderText = "Address of venue";
+            this.VenueAddress.MinimumWidth = 6;
+            this.VenueAddress.Name = "VenueAddress";
+            this.VenueAddress.Width = 125;
+            // 
+            // TicketsPrice
+            // 
+            this.TicketsPrice.HeaderText = "Ticket Price";
+            this.TicketsPrice.MinimumWidth = 6;
+            this.TicketsPrice.Name = "TicketsPrice";
+            this.TicketsPrice.Width = 125;
+            // 
+            // CountTickets
+            // 
+            this.CountTickets.HeaderText = "Count of tickets";
+            this.CountTickets.MinimumWidth = 6;
+            this.CountTickets.Name = "CountTickets";
+            this.CountTickets.Width = 125;
             // 
             // Messages
             // 
@@ -394,29 +467,6 @@
             this.MessagesList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.MessagesList.Size = new System.Drawing.Size(696, 292);
             this.MessagesList.TabIndex = 5;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "MessageID";
-            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Visible = false;
-            this.dataGridViewTextBoxColumn1.Width = 125;
-            // 
-            // DateOfReceiving
-            // 
-            this.DateOfReceiving.HeaderText = "Date";
-            this.DateOfReceiving.MinimumWidth = 6;
-            this.DateOfReceiving.Name = "DateOfReceiving";
-            this.DateOfReceiving.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Text";
-            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Width = 62;
             // 
             // MyInfo
             // 
@@ -523,41 +573,28 @@
             this.materialTabSelector1.TabIndex = 1;
             this.materialTabSelector1.Text = "materialTabSelector1";
             // 
-            // ConsertID
+            // dataGridViewTextBoxColumn1
             // 
-            this.ConsertID.HeaderText = "ConsertID";
-            this.ConsertID.MinimumWidth = 6;
-            this.ConsertID.Name = "ConsertID";
-            this.ConsertID.Visible = false;
-            this.ConsertID.Width = 125;
+            this.dataGridViewTextBoxColumn1.HeaderText = "MessageID";
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Visible = false;
+            this.dataGridViewTextBoxColumn1.Width = 125;
             // 
-            // DateOfConsert
+            // DateOfReceiving
             // 
-            this.DateOfConsert.HeaderText = "Date Of Consert";
-            this.DateOfConsert.MinimumWidth = 6;
-            this.DateOfConsert.Name = "DateOfConsert";
-            this.DateOfConsert.Width = 125;
+            this.DateOfReceiving.HeaderText = "Date";
+            this.DateOfReceiving.MinimumWidth = 6;
+            this.DateOfReceiving.Name = "DateOfReceiving";
+            this.DateOfReceiving.Width = 125;
             // 
-            // SingersName
+            // dataGridViewTextBoxColumn2
             // 
-            this.SingersName.HeaderText = "Name of Singer";
-            this.SingersName.MinimumWidth = 6;
-            this.SingersName.Name = "SingersName";
-            this.SingersName.Width = 125;
-            // 
-            // TicketsPrice
-            // 
-            this.TicketsPrice.HeaderText = "Ticket Price";
-            this.TicketsPrice.MinimumWidth = 6;
-            this.TicketsPrice.Name = "TicketsPrice";
-            this.TicketsPrice.Width = 125;
-            // 
-            // CountTickets
-            // 
-            this.CountTickets.HeaderText = "Count of tickets";
-            this.CountTickets.MinimumWidth = 6;
-            this.CountTickets.Name = "CountTickets";
-            this.CountTickets.Width = 125;
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Text";
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Width = 62;
             // 
             // SingersForm
             // 
@@ -606,9 +643,6 @@
         private MaterialSkin.Controls.MaterialRaisedButton ShowAll;
         private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton3;
         private MaterialSkin.Controls.MaterialRaisedButton SeeStatictics;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProposalID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FullName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Email;
         private System.Windows.Forms.TabPage Managers;
         private System.Windows.Forms.TabPage Messages;
         private System.Windows.Forms.DataGridView ManagersList;
@@ -619,15 +653,21 @@
         private MaterialSkin.Controls.MaterialRaisedButton RemoveAll;
         private MaterialSkin.Controls.MaterialRaisedButton Remove;
         private System.Windows.Forms.DataGridView MessagesList;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DateOfReceiving;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private MaterialSkin.Controls.MaterialRaisedButton TerminateContract;
         private MaterialSkin.Controls.MaterialRaisedButton DeleteAccount;
+        private MaterialSkin.Controls.MaterialSingleLineTextField ManagersPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProposalID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FullName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Email;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CostServices;
         private System.Windows.Forms.DataGridViewTextBoxColumn ConsertID;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateOfConsert;
         private System.Windows.Forms.DataGridViewTextBoxColumn SingersName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VenueAddress;
         private System.Windows.Forms.DataGridViewTextBoxColumn TicketsPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn CountTickets;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DateOfReceiving;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
     }
 }
